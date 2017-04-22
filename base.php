@@ -27,7 +27,7 @@ function read_last_line($f) {
 }
 
 function get_last_comment() {
-  $comments_file = fopen(FILE_COMMENTS, "r");
+  $comments_file = @fopen(FILE_COMMENTS, "r");
   if ($comments_file) {
     $comment = read_last_line($comments_file);
     fclose($comments_file);
