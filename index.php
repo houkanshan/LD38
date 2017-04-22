@@ -21,12 +21,12 @@ include "base.php";
 
   <p>Last comment is: <?php echo get_last_comment(); ?></p>
 
-  <form action="post_comment" method="post">
+  <form action="post_comment.php" method="post">
     <input type="text" name="comment">
     <button type="submit">submit</button>
   </form>
 
-  <form action="extend_life" method="post">
+  <form action="extend_life.php" method="post">
     <button type="submit">submit</button>
   </form>
 
