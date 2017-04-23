@@ -1,5 +1,6 @@
 <?php
 
+define("FILE_LOG", "data/log.txt");
 define("FILE_LIFE", "data/life.txt");
 define("FILE_DEATH_TIME", "data/death_time.txt");
 define("FILE_BRITH_TIME", "data/brith_time.txt");
@@ -14,6 +15,15 @@ define("HALF_LIFE_TIME", 1); // 1 hour
 define("LIFE_EXTEND_EACH_TIME", 1 / INITIAL_LIFE_TIME);
 
 date_default_timezone_set('UTC');
+
+function safe_get_contents($filename) {
+  $res = file_get_contents($filename);
+  if ($res === FALSE) {
+    raise_e("Get $filename error: $res");
+  } else {
+    return $res;
+  }
+}
 
 function read_last_line($f) {
   $line = '';
@@ -66,10 +76,12 @@ function register_user($ip) {
 function get_or_create_user_info($ip) {
   $file_user = DIR_USERS.$ip.".txt";
   $handle = @fopen($file_user, "r");
-  if ($handle) {
+
+  clearstatcache();
+  if (file_exists($file_user)) {
     # User existed
-    $user_info = trim(fgets($handle));
-    $user_info = explode(",", $user_info, 2);
+    $user_info = safe_get_contents($file_user);
+    $user_info = explode(",", trim($user_info), 2);
     fclose($handle);
     return $user_info;
   } else {
@@ -89,6 +101,7 @@ function update_user_active_time($ip, $id, $time) {
 }
 
 function try_extend_life($ip) {
+  if (is_dead()) { return false; }
   $user_info = get_or_create_user_info($ip);
   $user_id = $user_info[0];
   $last_active_time = $user_info[1];
@@ -122,7 +135,7 @@ function get_brith_time() {
     $now_time = time();
     return set_brith_time($now_time);
   } else {
-    return intval(file_get_contents(FILE_BRITH_TIME));
+    return intval(trim(safe_get_contents(FILE_BRITH_TIME)));
   }
 }
 
@@ -147,11 +160,11 @@ function get_life() {
 }
 
 function get_last_life_info() {
-   $life_info = explode(',', trim(file_get_contents(FILE_LIFE)), 2);
-   return array(
-     floatval($life_info[0]),
-     intval($life_info[1]),
-   );
+  $life_info = explode(',', trim(safe_get_contents(FILE_LIFE)), 2);
+  return array(
+    floatval($life_info[0]),
+    intval($life_info[1]),
+  );
 }
 
 function update_life($life, $time) {
@@ -168,14 +181,23 @@ function get_death_time() {
     file_put_contents(FILE_DEATH_TIME, $death_time, LOCK_EX);
     return $death_time;
   } else {
-    return intval(trim(file_get_contents(FILE_DEATH_TIME)));
+    return intval(trim(safe_get_contents(FILE_DEATH_TIME)));
   }
 }
+
 
 function is_dead() {
   // $death_time = get_death_time();
   // return time() > $death_time;
   return get_life() < DEAD_LIFE;
+}
+
+function write_log($log) {
+   file_put_contents(FILE_LOG, $log."\n",  FILE_APPEND | LOCK_EX);
+}
+function raise_e($log) {
+  write_log($log);
+  throw new Exception($log);
 }
 
 ?>

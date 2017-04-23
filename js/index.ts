@@ -72,7 +72,7 @@ function startPlay() : void {
   })
   .then(utils.delayedPromise(500))
   .then(() => {
-    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT\nANY TIME.')
+    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY\nTIME.')
   })
   // .then(utils.delayedPromise(1000))
   // .then(() => updateComment(holdingComment))
