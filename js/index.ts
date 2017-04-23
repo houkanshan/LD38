@@ -60,7 +60,7 @@ function startPlay() : void {
     if (newLife) {
       updateLifeProgress(newLife)
       console.info('Life extended.')
-      return utils.delayedPromise(2000)()
+      return utils.delayedPromise(1000)()
     } else {
       console.info('Can`t extend life.')
     }
@@ -98,9 +98,17 @@ const RE_ID_COMMENT = /(\d+),(.+)/
 let lastComment = ''
 function updateComment(newComment: string) {
   if (lastComment === newComment) { return }
-  lastComment = newComment
   const [_, id, comment] = newComment.match(RE_ID_COMMENT)
-  return typer($('#last-comment'), `Player #${utils.leftPad(id)} says:\n"${comment}"`)
+  const formatedComment = `Player #${utils.leftPad(id)} says:\n"${comment}"`
+
+  if (!lastComment) {
+    $('#last-comment').text(formatedComment)
+    lastComment = newComment
+    return $.Deferred().resolve().promise()
+  } else {
+    lastComment = newComment
+    return typer($('#last-comment'), formatedComment)
+  }
 }
 
 function startDeath() : void {

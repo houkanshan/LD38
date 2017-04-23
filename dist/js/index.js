@@ -10387,7 +10387,7 @@ function startPlay() {
         if (newLife) {
             updateLifeProgress(newLife);
             console.info('Life extended.');
-            return __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](2000)();
+            return __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000)();
         }
         else {
             console.info('Can`t extend life.');
@@ -10423,9 +10423,17 @@ function updateComment(newComment) {
     if (lastComment === newComment) {
         return;
     }
-    lastComment = newComment;
     var _a = newComment.match(RE_ID_COMMENT), _ = _a[0], id = _a[1], comment = _a[2];
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment'), "Player #" + __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* leftPad */](id) + " says:\n\"" + comment + "\"");
+    var formatedComment = "Player #" + __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* leftPad */](id) + " says:\n\"" + comment + "\"";
+    if (!lastComment) {
+        __WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment').text(formatedComment);
+        lastComment = newComment;
+        return __WEBPACK_IMPORTED_MODULE_0_jquery__["Deferred"]().resolve().promise();
+    }
+    else {
+        lastComment = newComment;
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment'), formatedComment);
+    }
 }
 function startDeath() {
     var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
