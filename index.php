@@ -1,6 +1,7 @@
 <?php include "base.php"; ?>
 
 <?php
+define("VERSION", 1);
 $ip = $_SERVER['REMOTE_ADDR'];
 $is_dead = is_dead();
 $user_id = get_id_by_ip($ip);
@@ -13,7 +14,7 @@ $death_time = get_death_time();
 <head>
   <meta charset="UTF-8">
   <title>LD38</title>
-  <link rel="stylesheet" href="dist/css/index.css">
+  <link rel="stylesheet" href="dist/css/index.css?v=<?php echo VERSION ?>">
 </head>
 <body data-state="title">
 <div id="screen">
@@ -56,6 +57,6 @@ $death_time = get_death_time();
   }
 </script>
 
-<script src="dist/js/index.js"></script>
+<script src="dist/js/index.js?v=<?php echo VERSION ?>"></script>
 </body>
 </html>

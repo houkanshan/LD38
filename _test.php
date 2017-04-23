@@ -30,5 +30,7 @@ include "base.php";
   <form action="extend_life.php" method="post">
     <button type="submit">submit</button>
   </form>
+
+  <?php phpinfo() ?>
 </body>
 </html>
