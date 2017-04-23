@@ -536,11 +536,13 @@ body {
 }
 #welcome {
   margin: 10px;
+  white-space: pre-line;
 }
 #welcome p {
   margin: 0 0 10px;
 }
 .comment-wrapper {
+  display: none;
   background: #000;
   border: 1px solid #fff;
   position: absolute;
@@ -571,4 +573,5 @@ body {
 }
 #stage-dead #end-title {
   margin: 200px 10px 10px;
+  white-space: pre-line;
 }

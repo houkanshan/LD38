@@ -28,12 +28,8 @@ $death_time = get_death_time();
   </div>
   <div id="stage-main" class="stage">
     <div id="welcome">
-      <p>
-        WELCOME TO THE GAME
-        <br>
-        PLAYER #<?php echo str_pad($user_id, 5, "0", STR_PAD_LEFT) ?>
-      </p>
-      <p>THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY TIME.</p>
+      <p id="welcome-line-1"></p>
+      <p id="welcome-line-2"></p>
     </div>
     <p id="last-comment-wrapper"><span id="last-comment"></span></p>
     <form class="post-form">
