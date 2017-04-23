@@ -10347,25 +10347,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var doc = __WEBPACK_IMPORTED_MODULE_0_jquery__(document);
 var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
-startDeath();
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__crt__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#screen'));
-var holdingComment = '';
 __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](function (status) {
     if (__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime !== status.deathTime) {
         console.info("death time updated " + __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime + " -> " + status.deathTime);
         __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime = status.deathTime;
     }
-    if (status.comment && lastComment !== status.comment) {
-        if (__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].gameStarted) {
-            updateComment(status.comment);
-        }
-        else {
-            holdingComment = status.comment;
-        }
+    if (status.comment) {
+        updateComment(status.comment);
     }
 });
 __WEBPACK_IMPORTED_MODULE_2__checkers__["b" /* startLifeProgressChecker */](startDeath);
-doc.on('click', '.btn-start', startPlay);
+doc.one('click', '#screen', startPlay);
 doc.on('submit', '.post-form', postComment);
 if (document.readyState === 'complete') {
     setTimeout(startGame, 500);
@@ -10389,12 +10382,7 @@ function startPlay() {
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
         .then(function () {
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT\nANY TIME.');
-    })
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000))
-        .then(function () { return updateComment(holdingComment); })
-        .then(function () { __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].gameStarted = true; })
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
-        .then(function () { __WEBPACK_IMPORTED_MODULE_0_jquery__('.comment-wrapper').show(); });
+    });
     __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php')
         .then(function (newDeathTime) {
         if (newDeathTime) {
@@ -10436,12 +10424,7 @@ function startDeath() {
     __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](3000)()
         .then(function () {
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), "The Game is Dead,\nit has lived for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
-    })
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
-        .then(function () { return updateComment(holdingComment); })
-        .then(function () { __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].gameStarted = true; })
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
-        .then(function () { __WEBPACK_IMPORTED_MODULE_0_jquery__('.comment-wrapper').show(); });
+    });
     body.attr('data-state', 'dead');
 }
 

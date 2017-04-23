@@ -8,27 +8,25 @@ import typer from './typer'
 const doc = $(document)
 const body = $(document.body)
 
-startDeath()
-
 crtScreen($('#screen'))
 
-let holdingComment = ''
+// let holdingComment = ''
 Checkers.startDataUpdateChecker((status) => {
   if (GameData.deathTime !== status.deathTime) {
     console.info(`death time updated ${GameData.deathTime} -> ${status.deathTime}`)
     GameData.deathTime = status.deathTime
   }
-  if (status.comment && lastComment !== status.comment) {
-    if (GameData.gameStarted) {
+  if (status.comment) {
+    // if (GameData.gameStarted) {
       updateComment(status.comment)
-    } else {
-      holdingComment = status.comment
-    }
+    // } else {
+      // holdingComment = status.comment
+    // }
   }
 })
 Checkers.startLifeProgressChecker(startDeath)
 
-doc.on('click', '.btn-start', startPlay)
+doc.one('click', '#screen', startPlay)
 doc.on('submit', '.post-form', postComment)
 
 if (document.readyState === 'complete') {
@@ -55,11 +53,11 @@ function startPlay() : void {
   .then(() => {
     return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT\nANY TIME.')
   })
-  .then(utils.delayedPromise(1000))
-  .then(() => updateComment(holdingComment))
-  .then(() => { GameData.gameStarted = true })
-  .then(utils.delayedPromise(500))
-  .then(() => { $('.comment-wrapper').show() })
+  // .then(utils.delayedPromise(1000))
+  // .then(() => updateComment(holdingComment))
+  // .then(() => { GameData.gameStarted = true })
+  // .then(utils.delayedPromise(500))
+  // .then(() => { $('.comment-wrapper').show() })
         
   $.post('extend_life.php')
     .then((newDeathTime) => {
@@ -102,11 +100,11 @@ function startDeath() : void {
   .then(() => {
     return typer($('#end-title'), `The Game is Dead,\nit has lived for ${hours} hours ${minutes} minutes ${seconds} seconds.`)
   })
-  .then(utils.delayedPromise(500))
-  .then(() => updateComment(holdingComment))
-  .then(() => { GameData.gameStarted = true })
-  .then(utils.delayedPromise(500))
-  .then(() => { $('.comment-wrapper').show() })
+  // .then(utils.delayedPromise(500))
+  // .then(() => updateComment(holdingComment))
+  // .then(() => { GameData.gameStarted = true })
+  // .then(utils.delayedPromise(500))
+  // .then(() => { $('.comment-wrapper').show() })
 
   body.attr('data-state', 'dead')
 }

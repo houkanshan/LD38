@@ -37,6 +37,9 @@ body
   &.on:after
     display: none
 
+#last-comment-wrapper
+.comment-wrapper
+  display: none
 
 #computer
   size: 487px 737px
@@ -55,13 +58,18 @@ body
     display: block
   &[data-state="title"]
     #stage-title
+      cursor: pointer
       display: block
 
   &[data-state="main"]
+    #last-comment-wrapper
+    .comment-wrapper
     #stage-main
       display: block
 
   &[data-state="dead"]
+    #last-comment-wrapper
+    .comment-wrapper
     #stage-dead
       display: block
 
@@ -136,7 +144,6 @@ body
     margin: -11px 0 10px
 
 .comment-wrapper
-  display: none
   background: #000
   border: 1px solid #fff
   position: absolute

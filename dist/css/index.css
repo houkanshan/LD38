@@ -589,6 +589,10 @@ body.on:before,
 body.on:after {
   display: none;
 }
+#last-comment-wrapper,
+.comment-wrapper {
+  display: none;
+}
 #computer {
   width: 487px;
   height: 737px;
@@ -606,11 +610,16 @@ body.on:after {
   display: block;
 }
 .on.compute-on[data-state="title"] #stage-title {
+  cursor: pointer;
   display: block;
 }
+.on.compute-on[data-state="main"] #last-comment-wrapper,
+.on.compute-on[data-state="main"] .comment-wrapper,
 .on.compute-on[data-state="main"] #stage-main {
   display: block;
 }
+.on.compute-on[data-state="dead"] #last-comment-wrapper,
+.on.compute-on[data-state="dead"] .comment-wrapper,
 .on.compute-on[data-state="dead"] #stage-dead {
   display: block;
 }
@@ -690,7 +699,6 @@ body.on:after {
   margin: -11px 0 10px;
 }
 .comment-wrapper {
-  display: none;
   background: #000;
   border: 1px solid #fff;
   position: absolute;

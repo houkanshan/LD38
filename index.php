@@ -27,7 +27,7 @@ $death_time = get_death_time();
   <div id="stage-title" class="stage">
     <div class="progress-overlay"><div class="progress-bar"></div></div>
     <h1 id="title"></h1>
-    <a class="btn-start" href="javascript:;"></a>
+    <a class="btn-start"></a>
   </div>
   <div id="stage-main" class="stage">
     <div id="welcome">
