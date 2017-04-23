@@ -1,7 +1,32 @@
 {
   "dependencies": {
     "@types/jquery": "^2.0.41",
+    "autoprefixer-stylus": "^0.13.0",
     "jquery": "^3.2.1",
-    "typescript": "^2.2.2"
-  }
+    "source-map-loader": "^0.2.1",
+    "stylus": "^0.54.5",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.2.2",
+    "webpack": "^2.4.1"
+  },
+  "name": "ld38",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "js": "./node_modules/.bin/webpack -w",
+    "css": "./node_modules/.bin/stylus -w -u autoprefixer-stylus --include-css -o ./dist/css ./css/index.styl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/houkanshan/LD38.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/houkanshan/LD38/issues"
+  },
+  "homepage": "https://github.com/houkanshan/LD38#readme",
+  "description": ""
 }

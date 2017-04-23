@@ -1,6 +1,7 @@
 <?php
 
 define("FILE_DEATH_TIME", "data/death_time.txt");
+define("FILE_BRITH_TIME", "data/brith_time.txt");
 define("FILE_GLOBAL_ID", "data/global_id.txt");
 define("DIR_USERS", "data/users/");
 define("FILE_COMMENTS", "data/comments.txt");
@@ -103,16 +104,33 @@ function try_extend_life($ip) {
   return update_death_time(get_death_time() + $time_to_extend);
 }
 
+function set_brith_time($time) {
+  file_put_contents(FILE_BRITH_TIME, $time.PHP_EOL, LOCK_EX);
+  return $time;
+}
+
+function get_brith_time() {
+  clearstatcache();
+  if (!file_exists(FILE_BRITH_TIME)) {
+    $now_time = time();
+    return set_brith_time($now_time);
+  } else {
+    return intval(file_get_contents(FILE_BRITH_TIME));
+  }
+}
+
 function get_death_time() {
   clearstatcache();
   if (!file_exists(FILE_DEATH_TIME)) {
     $now_time = time();
     $death_time = $now_time + 3 * 24 * 60 * 60;
+    set_brith_time($now_time);
     return update_death_time($death_time);
   } else {
     return intval(file_get_contents(FILE_DEATH_TIME));
   }
 }
+
 
 function update_death_time($death_time) {
   file_put_contents(FILE_DEATH_TIME, $death_time.PHP_EOL, LOCK_EX);

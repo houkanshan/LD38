@@ -1,0 +1,30 @@
+@require "variables"
+@require "mixins"
+@require "normalize.css"
+
+.stage
+  display: none
+
+[data-state="title"]
+  #stage-title
+    display: block
+
+[data-state="main"]
+  #stage-main
+    display: block
+
+[data-state="dead"]
+  #stage-dead
+    display: block
+
+#screen
+  background: $colorScreen;
+  size: 500px
+  color: $colorScreenText;
+  text-align: center
+  a
+    color: @color
+    text-decoration: none
+
+.btn-start
+  margin-top: 100px

@@ -1,5 +1,9 @@
+<?php include "base.php"; ?>
+
 <?php
-include "base.php";
+$is_dead = is_dead();
+$brith_time = get_brith_time();
+$death_time = get_death_time();
 ?>
 
 <!DOCTYPE html>
@@ -7,29 +11,30 @@ include "base.php";
 <head>
   <meta charset="UTF-8">
   <title>LD38</title>
+  <link rel="stylesheet" href="dist/css/index.css">
 </head>
-<body>
-  <p> Will die at: <?php echo date(DATE_RFC2822, get_death_time()); ?> </p>
+<body data-state="<?php echo $is_dead ? "dead" : "title" ?>">
+<div id="screen">
+  <div id="stage-title" class="stage">
+    <a class="btn-start" href="javascript:;">- click to start -</a>
+  </div>
+  <div id="stage-main" class="stage">
+    <p>Last comment: <span id="last-comment"><?php echo get_last_comment() ?></span></p>
+    <input type="text" name="comment" placeholder="Leave your comments">
+  </div>
+  <div id="stage-dead" class="stage">
+  </div>
+</div>
 
-  <p><?php
-    if (is_dead()) {
-      echo "It's dead.";
-    } else {
-      echo "It's alive";
-    }
-  ?></p>
+<script>
+  var Data = {
+    brithTime: <?php echo $brith_time ?>
+  , deathTime: <?php echo $death_time ?>
+  }
+</script>
 
-  <p>Last comment is: <?php echo get_last_comment(); ?></p>
-
-  <form action="post_comment.php" method="post">
-    <input type="text" name="comment">
-    <button type="submit">submit</button>
-  </form>
-
-  <form action="extend_life.php" method="post">
-    <button type="submit">submit</button>
-  </form>
-
-
+<?php if (!$is_dead) { ?>
+<script src="dist/js/index.js"></script>
+<?php } ?>
 </body>
 </html>
