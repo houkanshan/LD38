@@ -10366,7 +10366,7 @@ var lifeProgressBar = __WEBPACK_IMPORTED_MODULE_0_jquery__('.progress-bar');
 function updateLifeProgress(life) {
     lifeProgressBar.css('transform', "translateY(" + -(1 - Math.min(1, life)) * 100 + "%)");
 }
-doc.one('click', '#screen', startPlay);
+doc.one('click', '#stage-title', startPlay);
 doc.on('submit', '.post-form', postComment);
 if (document.readyState === 'complete') {
     setTimeout(startGame, 500);

@@ -45,7 +45,7 @@ $death_time = get_death_time();
   <p id="last-comment-wrapper"><span id="last-comment"></span></p>
   <form class="post-form">
     <div class="comment-wrapper">
-      <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="200">
+      <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="153">
     </div>
   </form>
 

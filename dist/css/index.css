@@ -629,12 +629,11 @@ body.on:after {
   height: 185px;
   background: #000;
   margin: 48px auto 0;
-  padding-left: 1px;
 }
 #screen {
   background: #000;
-  width: 100%;
   height: 100%;
+  padding-left: 1px;
   color: #fff;
   overflow: hidden;
   position: relative;
@@ -729,7 +728,7 @@ body.on:after {
   color: #fff;
 }
 #stage-dead #end-title {
-  margin: 62px 0 0;
+  margin: 50px 0 0;
   white-space: pre-line;
 }
 @-webkit-keyframes fade-inout {

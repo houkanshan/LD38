@@ -38,7 +38,7 @@ function updateLifeProgress(life) {
 }
 // Checkers.startLifeProgressChecker(startDeath)
 
-doc.one('click', '#screen', startPlay)
+doc.one('click', '#stage-title', startPlay)
 doc.on('submit', '.post-form', postComment)
 
 if (document.readyState === 'complete') {
