@@ -6,15 +6,16 @@ import GameData from './GameData'
 const doc = $(document)
 const body = $(document.body)
 
-Checkers.startLifeProgressChecker(startDeath)
-
 Checkers.startDataUpdateChecker((status) => {
   if (GameData.deathTime !== status.deathTime) {
     console.info(`death time updated ${GameData.deathTime} -> ${status.deathTime}`)
     GameData.deathTime = status.deathTime
   }
-  updateComment(status.comment)
+  if (status.comment) {
+    updateComment(status.comment)
+  }
 })
+Checkers.startLifeProgressChecker(startDeath)
 
 doc.on('click', '.btn-start', startGame)
 doc.on('submit', '.post-form', postComment)
@@ -46,12 +47,17 @@ function postComment(e:Event) {
 }
 
 const RE_ID_COMMENT = /(\d+),(.+)/
-function updateComment(newComment) {
+function updateComment(newComment: String): void {
   const [_, id, comment] = newComment.match(RE_ID_COMMENT)
   $('#last-comment').text(`Player #${id} says:\n"${comment}"`)
 }
 
 function startDeath() : void {
-  body.attr('data-state', 'death')
-  // TODO: Death
+  const lifeTime = GameData.deathTime - GameData.brithTime
+  const {minutes, hours, seconds} = utils.parseTime(lifeTime)
+  $('#end-title').text(`The Game is Dead, it has lived for ${hours} hours ${minutes} minutes ${seconds} seconds.`)
+
+  Checkers.stopDataUpdateChecker()
+
+  body.attr('data-state', 'dead')
 }

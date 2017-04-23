@@ -6,6 +6,7 @@ define("FILE_GLOBAL_ID", "data/global_id.txt");
 define("DIR_USERS", "data/users/");
 define("FILE_COMMENTS", "data/comments.txt");
 define("USER_COOLING_TIME", 60 * 60); // 1 hour.
+define("INITIAL_LIFE_TIME", 3 * 24 * 60 * 60); // 72 hour
 
 date_default_timezone_set('UTC');
 
@@ -45,9 +46,9 @@ function register_user($ip) {
   if (!flock($handle, LOCK_EX)) { exit(); }
 
   $id = intval(trim(fgets($handle)));
-  echo "old id:".$id."\n";
+  // echo "old id:".$id."\n";
   $id += 1;
-  echo "new id:".$id."\n";
+  // echo "new id:".$id."\n";
   fseek($handle, 0);
   fwrite($handle, $id);
   clearstatcache();
@@ -99,7 +100,7 @@ function try_extend_life($ip) {
     }
   }
   // echo "cool, update.";
-  $time_to_extend = 60 * 60 + rand(-1, 1) * 600;
+  $time_to_extend = 60 * 60 + rand(-600, 600);
   update_user_active_time($ip, $user_id, $curr_time);
   return update_death_time(get_death_time() + $time_to_extend);
 }
@@ -123,7 +124,7 @@ function get_death_time() {
   clearstatcache();
   if (!file_exists(FILE_DEATH_TIME)) {
     $now_time = time();
-    $death_time = $now_time + 3 * 24 * 60 * 60;
+    $death_time = $now_time + INITIAL_LIFE_TIME;
     set_brith_time($now_time);
     return update_death_time($death_time);
   } else {

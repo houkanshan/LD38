@@ -485,7 +485,8 @@ body {
   bottom: 50px;
   text-align: center;
 }
-.stage-title {
+#stage-title,
+#stage-dead {
   text-align: center;
 }
 #last-comment-wrapper {
@@ -529,4 +530,7 @@ body {
 }
 .comment-wrapper input[name="comment"]::placeholder {
   color: #fff;
+}
+#stage-dead #end-title {
+  margin: 200px 10px 10px;
 }

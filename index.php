@@ -15,8 +15,10 @@ $death_time = get_death_time();
   <title>LD38</title>
   <link rel="stylesheet" href="dist/css/index.css">
 </head>
-<body data-state="<?php echo $is_dead ? "dead" : "title" ?>">
+<body data-state="title">
 <div id="screen">
+  <?php if (!$is_dead) { ?>
+
   <div id="stage-title" class="stage">
     <div class="progress-overlay">
       <div class="progress-bar"></div>
@@ -39,7 +41,10 @@ $death_time = get_death_time();
       </div>
     </form>
   </div>
+
+  <?php } ?>
   <div id="stage-dead" class="stage">
+    <div id="end-title"></div>
   </div>
 </div>
 
@@ -51,8 +56,6 @@ $death_time = get_death_time();
   }
 </script>
 
-<?php if (!$is_dead) { ?>
 <script src="dist/js/index.js"></script>
-<?php } ?>
 </body>
 </html>

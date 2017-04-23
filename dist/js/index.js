@@ -10334,21 +10334,25 @@ return jQuery;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__checkers__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__GameData__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkers__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GameData__ = __webpack_require__(4);
+
 
 
 
 var doc = __WEBPACK_IMPORTED_MODULE_0_jquery__(document);
 var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
-__WEBPACK_IMPORTED_MODULE_1__checkers__["a" /* startLifeProgressChecker */](startDeath);
-__WEBPACK_IMPORTED_MODULE_1__checkers__["b" /* startDataUpdateChecker */](function (status) {
-    if (__WEBPACK_IMPORTED_MODULE_2__GameData__["a" /* default */].deathTime !== status.deathTime) {
-        console.info("death time updated " + __WEBPACK_IMPORTED_MODULE_2__GameData__["a" /* default */].deathTime + " -> " + status.deathTime);
-        __WEBPACK_IMPORTED_MODULE_2__GameData__["a" /* default */].deathTime = status.deathTime;
+__WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](function (status) {
+    if (__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime !== status.deathTime) {
+        console.info("death time updated " + __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime + " -> " + status.deathTime);
+        __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime = status.deathTime;
     }
-    updateComment(status.comment);
+    if (status.comment) {
+        updateComment(status.comment);
+    }
 });
+__WEBPACK_IMPORTED_MODULE_2__checkers__["b" /* startLifeProgressChecker */](startDeath);
 doc.on('click', '.btn-start', startGame);
 doc.on('submit', '.post-form', postComment);
 function startGame() {
@@ -10356,7 +10360,7 @@ function startGame() {
     __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php')
         .then(function (newDeathTime) {
         if (newDeathTime) {
-            __WEBPACK_IMPORTED_MODULE_2__GameData__["a" /* default */].deathTime = newDeathTime;
+            __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime = newDeathTime;
             console.info('life extended.');
         }
         else {
@@ -10384,7 +10388,11 @@ function updateComment(newComment) {
     __WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment').text("Player #" + id + " says:\n\"" + comment + "\"");
 }
 function startDeath() {
-    body.attr('data-state', 'death');
+    var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
+    var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title').text("The Game is Dead, it has lived for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
+    __WEBPACK_IMPORTED_MODULE_2__checkers__["c" /* stopDataUpdateChecker */]();
+    body.attr('data-state', 'dead');
 }
 
 
@@ -10393,9 +10401,16 @@ function startDeath() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = now;
+/* harmony export (immutable) */ __webpack_exports__["b"] = now;
+/* harmony export (immutable) */ __webpack_exports__["a"] = parseTime;
 function now() {
     return Date.now() / 1000 | 0;
+}
+function parseTime(sec) {
+    var hours = Math.floor(sec / 3600);
+    var minutes = Math.floor((sec - (hours * 3600)) / 60);
+    var seconds = sec - (hours * 3600) - (minutes * 60);
+    return { hours: hours, minutes: minutes, seconds: seconds };
 }
 
 
@@ -10408,18 +10423,21 @@ function now() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
-/* harmony export (immutable) */ __webpack_exports__["a"] = startLifeProgressChecker;
+/* harmony export (immutable) */ __webpack_exports__["b"] = startLifeProgressChecker;
 /* unused harmony export stopLifeChecker */
-/* harmony export (immutable) */ __webpack_exports__["b"] = startDataUpdateChecker;
+/* harmony export (immutable) */ __webpack_exports__["a"] = startDataUpdateChecker;
+/* harmony export (immutable) */ __webpack_exports__["c"] = stopDataUpdateChecker;
 
 
 
-var lifeCheckerHandle = null;
+var lifeCheckerStoped = false;
 var lifeProgressBar = __WEBPACK_IMPORTED_MODULE_2_jquery__('.progress-bar');
 function startLifeProgressChecker(onDie) {
     function checkLife() {
-        lifeCheckerHandle = null;
-        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* now */]();
+        if (lifeCheckerStoped) {
+            return;
+        }
+        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* now */]();
         var lifeRemain = Math.max(0, __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - now);
         var lifeTotal = __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].brithTime;
         lifeProgressBar.css('transform', "translateY(" + -(1 - lifeRemain / lifeTotal) * 100 + "%)");
@@ -10427,17 +10445,20 @@ function startLifeProgressChecker(onDie) {
             onDie();
         }
         else {
-            lifeCheckerHandle = setTimeout(checkLife, 500);
+            setTimeout(checkLife, 500);
         }
     }
     checkLife();
 }
 function stopLifeChecker() {
-    clearTimeout(lifeCheckerHandle);
+    lifeCheckerStoped = true;
 }
-var dataUpdateHandle = null;
+var dataUpdateCheckerStoped = false;
 function startDataUpdateChecker(onData) {
     function checkDataUpdate() {
+        if (dataUpdateCheckerStoped) {
+            return;
+        }
         __WEBPACK_IMPORTED_MODULE_2_jquery__["get"]('get_status.php')
             .then(function (status) {
             onData(status);
@@ -10447,6 +10468,9 @@ function startDataUpdateChecker(onData) {
         });
     }
     checkDataUpdate();
+}
+function stopDataUpdateChecker() {
+    dataUpdateCheckerStoped = true;
 }
 
 
