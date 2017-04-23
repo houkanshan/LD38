@@ -8,7 +8,7 @@ define("DIR_USERS", "data/users/");
 define("FILE_COMMENTS", "data/comments.txt");
 define("USER_COOLING_TIME", 60 * 60); // 1 hour.
 
-define("INITIAL_LIFE_TIME", 72); // 72 hour
+define("INITIAL_LIFE_TIME", 240); // 240 hour
 define("DEAD_LIFE", 1 / pow(2, INITIAL_LIFE_TIME));
 define("HALF_LIFE_TIME", 1); // 1 hour
 define("LIFE_EXTEND_EACH_TIME", 1 / INITIAL_LIFE_TIME);

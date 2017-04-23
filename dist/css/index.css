@@ -596,7 +596,7 @@ body.on:after {
 #computer {
   width: 487px;
   height: 737px;
-  background: url("../pics/foreground.png") top left/487px 737px no-repeat;
+  background: url("../pics/foreground.png?v=1") top left/487px 737px no-repeat;
   position: absolute;
   left: 50%;
   margin-left: -243.5px;
