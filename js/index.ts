@@ -2,9 +2,12 @@ import * as $ from 'jquery'
 import * as utils from './utils'
 import * as Checkers from './checkers'
 import GameData from './GameData'
+import crtScreen from './crt'
 
 const doc = $(document)
 const body = $(document.body)
+
+crtScreen($('#screen'))
 
 Checkers.startDataUpdateChecker((status) => {
   if (GameData.deathTime !== status.deathTime) {

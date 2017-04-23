@@ -10337,12 +10337,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkers__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GameData__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__crt__ = __webpack_require__(5);
+
 
 
 
 
 var doc = __WEBPACK_IMPORTED_MODULE_0_jquery__(document);
 var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__crt__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#screen'));
 __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](function (status) {
     if (__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime !== status.deathTime) {
         console.info("death time updated " + __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime + " -> " + status.deathTime);
@@ -10488,6 +10491,30 @@ function stopDataUpdateChecker() {
     brithTime: Data.brithTime,
     deathTime: Data.deathTime
 });
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = crtScreen;
+function crtScreen(screen) {
+    function flicker() {
+        if (Math.random() > 0.9) {
+            screen.addClass('flicker');
+            setTimeout(function () {
+                screen.removeClass('flicker');
+                if (Math.random() > 0.6) {
+                    setTimeout(function () { screen.addClass('flicker'); }, 50);
+                    setTimeout(function () { screen.removeClass('flicker'); }, 100);
+                }
+            }, 50);
+        }
+        setTimeout(flicker, 200);
+    }
+    flicker();
+}
 
 
 /***/ })
