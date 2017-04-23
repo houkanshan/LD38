@@ -20,7 +20,9 @@ $death_time = get_death_time();
   </div>
   <div id="stage-main" class="stage">
     <p>Last comment: <span id="last-comment"><?php echo get_last_comment() ?></span></p>
-    <input type="text" name="comment" placeholder="Leave your comments">
+    <form class="post-form">
+      <input type="text" name="comment" placeholder="Leave your comments">
+    </form>
   </div>
   <div id="stage-dead" class="stage">
   </div>

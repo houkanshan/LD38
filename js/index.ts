@@ -1,46 +1,57 @@
 import * as $ from 'jquery'
 import * as utils from './utils'
-
-declare const Data: any;
+import * as Checkers from './checkers'
+import GameData from './GameData'
 
 const doc = $(document)
 const body = $(document.body)
-const brithTime = Data.brithTime
-let deathTime = Data.deathTime
 
-startLifeChecker(startDeath)
-doc.on('click', '.btn-start', startGame)
+Checkers.startLifeProgressChecker(startDeath)
 
-let lifeCheckerHandle = null
-function startLifeChecker(onDie:()=>any) : void {
-  function checkLife() : void {
-    lifeCheckerHandle = null
-    const now = utils.now()
-    const lifeRemain = Math.max(0, deathTime - now)
-    const lifeTotal = deathTime -  brithTime
-    // TODO: style
-    $('#stage-title').attr('data-progress', lifeRemain/lifeTotal)
-    if (lifeRemain === 0) {
-      onDie()
-    } else {
-      lifeCheckerHandle = setTimeout(checkLife, 500)
-    }
+Checkers.startDataUpdateChecker((status) => {
+  if (GameData.deathTime !== status.deathTime) {
+    console.info(`death time updated ${GameData.deathTime} -> ${status.deathTime}`)
+    GameData.deathTime = status.deathTime
   }
-  checkLife()
-}
-function stopLifeChecker() : void {
-  clearTimeout(lifeCheckerHandle)
-}
+  updateComment(status.comment)
+})
 
+doc.on('click', '.btn-start', startGame)
+doc.on('submit', '.post-form', postComment)
 
 function startGame() : void {
   body.attr('data-state', 'main')
   $.post('extend_life.php')
-    .then((newLife) => {
-
+    .then((newDeathTime) => {
+      if (newDeathTime) {
+        GameData.deathTime = newDeathTime
+        console.info('life extended.')
+      } else {
+        console.info('can`t extend life.')
+      }
     })
 }
 
-function startDeath() : void {
+function postComment(e:Event) {
+  e.preventDefault()
+  const commentInput =  $('[name=comment]')
+  const commentTxt = commentInput.val()
+  if (!commentTxt) { return }
+  $.post('post_comment.php', {
+    comment: commentTxt
+  }).then((newComment) => {
+    commentInput.val('')
+    updateComment(newComment)
+  })
+}
 
+const RE_ID_COMMENT = /(\d+),(.+)/
+function updateComment(newComment) {
+  const [_, id, comment] = newComment.match(RE_ID_COMMENT)
+  $('#last-comment').text(`#${id}: ${comment}`)
+}
+
+function startDeath() : void {
+  body.attr('data-state', 'death')
+  // TODO: Death
 }

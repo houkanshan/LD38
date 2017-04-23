@@ -10334,42 +10334,57 @@ return jQuery;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__checkers__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__GameData__ = __webpack_require__(4);
+
 
 
 var doc = __WEBPACK_IMPORTED_MODULE_0_jquery__(document);
 var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
-var brithTime = Data.brithTime;
-var deathTime = Data.deathTime;
-startLifeChecker(startDeath);
-doc.on('click', '.btn-start', startGame);
-var lifeCheckerHandle = null;
-function startLifeChecker(onDie) {
-    function checkLife() {
-        lifeCheckerHandle = null;
-        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* now */]();
-        var lifeRemain = Math.max(0, deathTime - now);
-        var lifeTotal = deathTime - brithTime;
-        __WEBPACK_IMPORTED_MODULE_0_jquery__('#stage-title').attr('data-progress', lifeRemain / lifeTotal);
-        if (lifeRemain === 0) {
-            onDie();
-        }
-        else {
-            lifeCheckerHandle = setTimeout(checkLife, 500);
-        }
+__WEBPACK_IMPORTED_MODULE_1__checkers__["a" /* startLifeProgressChecker */](startDeath);
+__WEBPACK_IMPORTED_MODULE_1__checkers__["b" /* startDataUpdateChecker */](function (status) {
+    if (__WEBPACK_IMPORTED_MODULE_2__GameData__["a" /* default */].deathTime !== status.deathTime) {
+        console.info("death time updated " + __WEBPACK_IMPORTED_MODULE_2__GameData__["a" /* default */].deathTime + " -> " + status.deathTime);
+        __WEBPACK_IMPORTED_MODULE_2__GameData__["a" /* default */].deathTime = status.deathTime;
     }
-    checkLife();
-}
-function stopLifeChecker() {
-    clearTimeout(lifeCheckerHandle);
-}
+    updateComment(status.comment);
+});
+doc.on('click', '.btn-start', startGame);
+doc.on('submit', '.post-form', postComment);
 function startGame() {
     body.attr('data-state', 'main');
     __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php')
-        .then(function (newLife) {
+        .then(function (newDeathTime) {
+        if (newDeathTime) {
+            __WEBPACK_IMPORTED_MODULE_2__GameData__["a" /* default */].deathTime = newDeathTime;
+            console.info('life extended.');
+        }
+        else {
+            console.info('can`t extend life.');
+        }
     });
 }
+function postComment(e) {
+    e.preventDefault();
+    var commentInput = __WEBPACK_IMPORTED_MODULE_0_jquery__('[name=comment]');
+    var commentTxt = commentInput.val();
+    if (!commentTxt) {
+        return;
+    }
+    __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('post_comment.php', {
+        comment: commentTxt
+    }).then(function (newComment) {
+        commentInput.val('');
+        updateComment(newComment);
+    });
+}
+var RE_ID_COMMENT = /(\d+),(.+)/;
+function updateComment(newComment) {
+    var _a = newComment.match(RE_ID_COMMENT), _ = _a[0], id = _a[1], comment = _a[2];
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment').text("#" + id + ": " + comment);
+}
 function startDeath() {
+    body.attr('data-state', 'death');
 }
 
 
@@ -10382,6 +10397,67 @@ function startDeath() {
 function now() {
     return Date.now() / 1000 | 0;
 }
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GameData__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
+/* harmony export (immutable) */ __webpack_exports__["a"] = startLifeProgressChecker;
+/* unused harmony export stopLifeChecker */
+/* harmony export (immutable) */ __webpack_exports__["b"] = startDataUpdateChecker;
+
+
+
+var lifeCheckerHandle = null;
+function startLifeProgressChecker(onDie) {
+    function checkLife() {
+        lifeCheckerHandle = null;
+        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* now */]();
+        var lifeRemain = Math.max(0, __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - now);
+        var lifeTotal = __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].brithTime;
+        __WEBPACK_IMPORTED_MODULE_2_jquery__('#stage-title').attr('data-progress', lifeRemain / lifeTotal);
+        if (lifeRemain === 0) {
+            onDie();
+        }
+        else {
+            lifeCheckerHandle = setTimeout(checkLife, 500);
+        }
+    }
+    checkLife();
+}
+function stopLifeChecker() {
+    clearTimeout(lifeCheckerHandle);
+}
+var dataUpdateHandle = null;
+function startDataUpdateChecker(onData) {
+    function checkDataUpdate() {
+        __WEBPACK_IMPORTED_MODULE_2_jquery__["get"]('get_status.php')
+            .then(function (status) {
+            onData(status);
+        })
+            .always(function () {
+            setTimeout(checkDataUpdate, 3000);
+        });
+    }
+    checkDataUpdate();
+}
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    brithTime: Data.brithTime,
+    deathTime: Data.deathTime
+});
 
 
 /***/ })

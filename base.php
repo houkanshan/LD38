@@ -88,17 +88,17 @@ function try_extend_life($ip) {
   $last_active_time = $user_info[1];
   $curr_time = time();
 
-  echo "userid: $user_id.\n";
-  echo "last_active_time: $last_active_time.\n";
-  echo "current_time:$curr_time.\n";
+  // echo "userid: $user_id.\n";
+  // echo "last_active_time: $last_active_time.\n";
+  // echo "current_time:$curr_time.\n";
 
   if ($last_active_time) {
     if ($curr_time - $last_active_time < USER_COOLING_TIME) {
-      echo "still hot, won't upate.";
+      // echo "still hot, won't upate.";
       return false;
     }
   }
-  echo "cool, update.";
+  // echo "cool, update.";
   $time_to_extend = 60 * 60 + rand(-1, 1) * 600;
   update_user_active_time($ip, $user_id, $curr_time);
   return update_death_time(get_death_time() + $time_to_extend);
