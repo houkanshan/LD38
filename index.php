@@ -17,7 +17,7 @@ $death_time = get_death_time();
   <link rel="stylesheet" href="dist/css/index.css?v=<?php echo VERSION ?>">
 </head>
 <body data-state="title">
-<div id="screen">
+<div id="screen" class="crt-container">
   <?php if (!$is_dead) { ?>
 
   <div id="stage-title" class="stage">
