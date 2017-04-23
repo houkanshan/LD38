@@ -26,14 +26,23 @@ Checkers.startDataUpdateChecker((status) => {
 })
 Checkers.startLifeProgressChecker(startDeath)
 
-doc.on('click', '.btn-start', startGame)
+doc.on('click', '.btn-start', startPlay)
 doc.on('submit', '.post-form', postComment)
 
-setTimeout(function() {
-  body.addClass('on')
-}, 500)
+if (document.readyState === 'complete') {
+  setTimeout(startGame, 500)
+} else {
+  window.onload = startGame
+  setTimeout(startGame, 20000)
+}
+function startGame() {
+   body.addClass('on')
+   setTimeout(function() {
+     body.addClass('compute-on')
+   }, 1000)
+}
 
-function startGame() : void {
+function startPlay() : void {
   body.attr('data-state', 'main')
 
   utils.delayedPromise(1000)()

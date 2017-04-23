@@ -14,6 +14,18 @@ html, body
 body
   user-select: none
   background: url(../pics/background.png) top left \/ 200px 200px
+  &:before
+    content: ''
+    position: absolute
+    left: 0
+    top: 0
+    right: 0
+    bottom: 0
+    background: #000
+    z-index: 1000
+  &.on:before
+    display: none
+
 
 #computer
   size: 487px 737px
@@ -24,9 +36,12 @@ body
   bottom: -90px
 
 .stage
+#screen
   display: none
 
-.on
+.on.compute-on
+  #screen
+    display: block
   &[data-state="title"]
     #stage-title
       display: block

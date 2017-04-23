@@ -564,6 +564,19 @@ body {
           user-select: none;
   background: url("../pics/background.png") top left/200px 200px;
 }
+body:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 1000;
+}
+body.on:before {
+  display: none;
+}
 #computer {
   width: 487px;
   height: 737px;
@@ -573,16 +586,20 @@ body {
   margin-left: -243.5px;
   bottom: -90px;
 }
-.stage {
+.stage,
+#screen {
   display: none;
 }
-.on[data-state="title"] #stage-title {
+.on.compute-on #screen {
   display: block;
 }
-.on[data-state="main"] #stage-main {
+.on.compute-on[data-state="title"] #stage-title {
   display: block;
 }
-.on[data-state="dead"] #stage-dead {
+.on.compute-on[data-state="main"] #stage-main {
+  display: block;
+}
+.on.compute-on[data-state="dead"] #stage-dead {
   display: block;
 }
 #screen-wrapper {

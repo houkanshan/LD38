@@ -10364,12 +10364,22 @@ __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](functi
     }
 });
 __WEBPACK_IMPORTED_MODULE_2__checkers__["b" /* startLifeProgressChecker */](startDeath);
-doc.on('click', '.btn-start', startGame);
+doc.on('click', '.btn-start', startPlay);
 doc.on('submit', '.post-form', postComment);
-setTimeout(function () {
-    body.addClass('on');
-}, 500);
+if (document.readyState === 'complete') {
+    setTimeout(startGame, 500);
+}
+else {
+    window.onload = startGame;
+    setTimeout(startGame, 20000);
+}
 function startGame() {
+    body.addClass('on');
+    setTimeout(function () {
+        body.addClass('compute-on');
+    }, 1000);
+}
+function startPlay() {
     body.attr('data-state', 'main');
     __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000)()
         .then(function () {
