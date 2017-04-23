@@ -1,7 +1,7 @@
 <?php include "base.php"; ?>
 
 <?php
-define("VERSION", 1);
+define("VERSION", 2);
 $ip = $_SERVER['REMOTE_ADDR'];
 $is_dead = is_dead();
 $user_id = get_id_by_ip($ip);
