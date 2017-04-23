@@ -1,7 +1,7 @@
 <?php include "base.php"; ?>
 
 <?php
-define("VERSION", 3);
+define("VERSION", 4);
 $ip = $_SERVER['REMOTE_ADDR'];
 $is_dead = is_dead();
 $user_id = get_id_by_ip($ip);
@@ -44,7 +44,7 @@ $death_time = get_death_time();
   <p id="last-comment-wrapper"><span id="last-comment"></span></p>
   <form class="post-form">
     <div class="comment-wrapper">
-      <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="30">
+      <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="200">
     </div>
   </form>
 

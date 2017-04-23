@@ -13,7 +13,7 @@ crtScreen($('#screen'))
 // let holdingComment = ''
 Checkers.startDataUpdateChecker((status) => {
   if (GameData.deathTime !== status.deathTime) {
-    console.info(`death time updated ${GameData.deathTime} -> ${status.deathTime}`)
+    // console.info(`death time updated ${GameData.deathTime} -> ${status.deathTime}`)
     GameData.deathTime = status.deathTime
   }
   if (status.comment) {
@@ -63,9 +63,9 @@ function startPlay() : void {
     .then((newDeathTime) => {
       if (newDeathTime) {
         GameData.deathTime = newDeathTime
-        console.info('life extended.')
+        console.info('Life extended.')
       } else {
-        console.info('can`t extend life.')
+        console.info('Can`t extend life.')
       }
     })
 }

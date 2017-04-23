@@ -1,3 +1,5 @@
+import GameData from './GameData'
+
 export default function crtScreen(screen: JQuery): void {
     function flicker() {
         if (Math.random() > 0.9) {

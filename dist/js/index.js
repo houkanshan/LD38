@@ -10350,7 +10350,6 @@ var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__crt__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#screen'));
 __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](function (status) {
     if (__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime !== status.deathTime) {
-        console.info("death time updated " + __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime + " -> " + status.deathTime);
         __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime = status.deathTime;
     }
     if (status.comment) {
@@ -10387,10 +10386,10 @@ function startPlay() {
         .then(function (newDeathTime) {
         if (newDeathTime) {
             __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime = newDeathTime;
-            console.info('life extended.');
+            console.info('Life extended.');
         }
         else {
-            console.info('can`t extend life.');
+            console.info('Can`t extend life.');
         }
     });
 }
