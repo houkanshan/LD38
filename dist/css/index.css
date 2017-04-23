@@ -446,15 +446,87 @@ body {
 }
 #screen {
   background: #000;
+  border: 3px solid #ddd;
   width: 500px;
   height: 500px;
   color: #fff;
-  text-align: center;
+  overflow: hidden;
+  position: relative;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 #screen a {
   color: #fff;
   text-decoration: none;
 }
+#screen .progress-overlay,
+#screen .progress-bar {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+#screen .progress-overlay {
+  background: #fff;
+}
+#screen .progress-bar {
+  background: #000;
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+}
 .btn-start {
-  margin-top: 100px;
+  text-shadow: 1px 1px 0 #000;
+  left: 0;
+  right: 0;
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
+}
+.stage-title {
+  text-align: center;
+}
+#last-comment-wrapper {
+  white-space: pre-line;
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  right: 10px;
+}
+#welcome {
+  margin: 10px;
+}
+#welcome p {
+  margin: 0 0 10px;
+}
+.comment-wrapper {
+  background: #000;
+  border: 1px solid #fff;
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+}
+.comment-wrapper input[name="comment"] {
+  color: #fff;
+  outline: none;
+  padding: 3px 5px;
+  background: #000;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+.comment-wrapper input[name="comment"]::-webkit-input-placeholder {
+  color: #fff;
+}
+.comment-wrapper input[name="comment"]::-moz-placeholder {
+  color: #fff;
+}
+.comment-wrapper input[name="comment"]:-ms-input-placeholder {
+  color: #fff;
+}
+.comment-wrapper input[name="comment"]::placeholder {
+  color: #fff;
 }

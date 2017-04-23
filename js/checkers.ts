@@ -3,14 +3,14 @@ import * as utils from './utils'
 import * as $ from 'jquery'
 
 let lifeCheckerHandle = null
+const lifeProgressBar = $('.progress-bar')
 export function startLifeProgressChecker(onDie:()=>any) : void {
   function checkLife() : void {
     lifeCheckerHandle = null
     const now = utils.now()
     const lifeRemain = Math.max(0, GameData.deathTime - now)
     const lifeTotal = GameData.deathTime -  GameData.brithTime
-    // TODO: style
-    $('#stage-title').attr('data-progress', lifeRemain/lifeTotal)
+    lifeProgressBar.css('transform', `translateY(${- (1 - lifeRemain / lifeTotal) * 100}%)`)
     if (lifeRemain === 0) {
       onDie()
     } else {

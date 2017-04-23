@@ -10381,7 +10381,7 @@ function postComment(e) {
 var RE_ID_COMMENT = /(\d+),(.+)/;
 function updateComment(newComment) {
     var _a = newComment.match(RE_ID_COMMENT), _ = _a[0], id = _a[1], comment = _a[2];
-    __WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment').text("#" + id + ": " + comment);
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment').text("Player #" + id + " says:\n\"" + comment + "\"");
 }
 function startDeath() {
     body.attr('data-state', 'death');
@@ -10415,13 +10415,14 @@ function now() {
 
 
 var lifeCheckerHandle = null;
+var lifeProgressBar = __WEBPACK_IMPORTED_MODULE_2_jquery__('.progress-bar');
 function startLifeProgressChecker(onDie) {
     function checkLife() {
         lifeCheckerHandle = null;
         var now = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* now */]();
         var lifeRemain = Math.max(0, __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - now);
         var lifeTotal = __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].brithTime;
-        __WEBPACK_IMPORTED_MODULE_2_jquery__('#stage-title').attr('data-progress', lifeRemain / lifeTotal);
+        lifeProgressBar.css('transform', "translateY(" + -(1 - lifeRemain / lifeTotal) * 100 + "%)");
         if (lifeRemain === 0) {
             onDie();
         }
