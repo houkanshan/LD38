@@ -32,7 +32,7 @@ export function startDataUpdateChecker(onData: (any) => any) {
         onData(status)
       })
       .always(() => {
-        setTimeout(checkDataUpdate, 3000)
+        setTimeout(checkDataUpdate, 5000)
       })
   }
   checkDataUpdate()

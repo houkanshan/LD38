@@ -1,12 +1,17 @@
 <?php
 
+define("FILE_LIFE", "data/life.txt");
 define("FILE_DEATH_TIME", "data/death_time.txt");
 define("FILE_BRITH_TIME", "data/brith_time.txt");
 define("FILE_GLOBAL_ID", "data/global_id.txt");
 define("DIR_USERS", "data/users/");
 define("FILE_COMMENTS", "data/comments.txt");
 define("USER_COOLING_TIME", 60 * 60); // 1 hour.
-define("INITIAL_LIFE_TIME", 3 * 24 * 60 * 60); // 72 hour
+
+define("INITIAL_LIFE_TIME", 72); // 72 hour
+define("DEAD_LIFE", 1 / pow(2, INITIAL_LIFE_TIME));
+define("HALF_LIFE_TIME", 1); // 1 hour
+define("LIFE_EXTEND_EACH_TIME", 1 / INITIAL_LIFE_TIME);
 
 date_default_timezone_set('UTC');
 
@@ -100,9 +105,10 @@ function try_extend_life($ip) {
     }
   }
   // echo "cool, update.";
-  $time_to_extend = 60 * 60 + rand(-600, 600);
   update_user_active_time($ip, $user_id, $curr_time);
-  return update_death_time(get_death_time() + $time_to_extend);
+  // $time_to_extend = 60 * 60 + rand(-600, 600);
+  // return update_death_time(get_death_time() + $time_to_extend);
+  return update_life(min(1, get_life() + LIFE_EXTEND_EACH_TIME), $curr_time);
 }
 
 function set_brith_time($time) {
@@ -120,27 +126,56 @@ function get_brith_time() {
   }
 }
 
-function get_death_time() {
+function get_life() {
   clearstatcache();
-  if (!file_exists(FILE_DEATH_TIME)) {
-    $now_time = time();
-    $death_time = $now_time + INITIAL_LIFE_TIME;
-    set_brith_time($now_time);
-    return update_death_time($death_time);
+  if (!file_exists(FILE_LIFE)) {
+    return update_life(1, time());
   } else {
-    return intval(file_get_contents(FILE_DEATH_TIME));
+    $life_info = get_last_life_info();
+    $last_time = $life_info[1];
+    $last_life = $life_info[0];
+    $curr_time = time();
+    $duration_hour = ($curr_time - $last_time) / 60.0 / 60.0 / HALF_LIFE_TIME;
+    $new_life = $last_life / pow(2, $duration_hour); // half life
+    // echo $last_life;
+    // echo "\n";
+    // echo $duration;
+    // echo "\n";
+    // echo $new_life;
+    return update_life($new_life, $curr_time);
   }
 }
 
+function get_last_life_info() {
+   $life_info = explode(',', trim(file_get_contents(FILE_LIFE)), 2);
+   return array(
+     floatval($life_info[0]),
+     intval($life_info[1]),
+   );
+}
 
-function update_death_time($death_time) {
-  file_put_contents(FILE_DEATH_TIME, $death_time.PHP_EOL, LOCK_EX);
-  return $death_time;
+function update_life($life, $time) {
+  file_put_contents(FILE_LIFE, $life.','.$time.PHP_EOL, LOCK_EX);
+  return $life;
+}
+
+function get_death_time() {
+  if (!is_dead() || !file_exists(FILE_DEATH_TIME)) {
+    $last_life_info = get_last_life_info();
+    $last_life = $last_life_info[0];
+    $last_time = $last_life_info[1];
+    $death_time = $last_time + log($last_life / DEAD_LIFE, 2) * 60 * 60;
+    file_put_contents(FILE_DEATH_TIME, $death_time, LOCK_EX);
+    return $death_time;
+  } else {
+    return intval(trim(file_get_contents(FILE_DEATH_TIME)));
+  }
 }
 
 function is_dead() {
-  $death_time = get_death_time();
-  return time() > $death_time;
+  // $death_time = get_death_time();
+  // return time() > $death_time;
+  return get_life() < DEAD_LIFE;
 }
 
 ?>

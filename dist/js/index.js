@@ -10348,6 +10348,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var doc = __WEBPACK_IMPORTED_MODULE_0_jquery__(document);
 var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__crt__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#screen'));
+var gotDead = false;
 __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](function (status) {
     if (__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime !== status.deathTime) {
         __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime = status.deathTime;
@@ -10355,8 +10356,16 @@ __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](functi
     if (status.comment) {
         updateComment(status.comment);
     }
+    updateLifeProgress(status.life);
+    if (status.is_dead && !gotDead) {
+        gotDead = true;
+        startDeath();
+    }
 });
-__WEBPACK_IMPORTED_MODULE_2__checkers__["b" /* startLifeProgressChecker */](startDeath);
+var lifeProgressBar = __WEBPACK_IMPORTED_MODULE_0_jquery__('.progress-bar');
+function updateLifeProgress(life) {
+    lifeProgressBar.css('transform', "translateY(" + -(1 - Math.min(1, life)) * 100 + "%)");
+}
 doc.one('click', '#screen', startPlay);
 doc.on('submit', '.post-form', postComment);
 if (document.readyState === 'complete') {
@@ -10373,24 +10382,25 @@ function startGame() {
     }, 1000);
 }
 function startPlay() {
-    body.attr('data-state', 'main');
-    __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000)()
+    __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php')
+        .then(function (newLife) {
+        if (newLife) {
+            updateLifeProgress(newLife);
+            console.info('Life extended.');
+            return __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](2000)();
+        }
+        else {
+            console.info('Can`t extend life.');
+        }
+    })
+        .then(function () { return body.attr('data-state', 'main'); })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000))
         .then(function () {
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-1'), "WELCOME TO THE GAME\nPLAYER #" + __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* leftPad */](__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].userId));
     })
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
         .then(function () {
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT\nANY TIME.');
-    });
-    __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php')
-        .then(function (newDeathTime) {
-        if (newDeathTime) {
-            __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime = newDeathTime;
-            console.info('Life extended.');
-        }
-        else {
-            console.info('Can`t extend life.');
-        }
     });
 }
 function postComment(e) {
@@ -10473,7 +10483,7 @@ function delayedPromise(time) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
-/* harmony export (immutable) */ __webpack_exports__["b"] = startLifeProgressChecker;
+/* unused harmony export startLifeProgressChecker */
 /* unused harmony export stopLifeChecker */
 /* harmony export (immutable) */ __webpack_exports__["a"] = startDataUpdateChecker;
 /* unused harmony export stopDataUpdateChecker */
@@ -10514,7 +10524,7 @@ function startDataUpdateChecker(onData) {
             onData(status);
         })
             .always(function () {
-            setTimeout(checkDataUpdate, 3000);
+            setTimeout(checkDataUpdate, 5000);
         });
     }
     checkDataUpdate();

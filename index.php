@@ -6,6 +6,7 @@ $ip = $_SERVER['REMOTE_ADDR'];
 $is_dead = is_dead();
 $user_id = get_id_by_ip($ip);
 $brith_time = get_brith_time();
+$life = get_life();
 $death_time = get_death_time();
 ?>
 
@@ -57,6 +58,7 @@ $death_time = get_death_time();
     userId: '<?php echo $user_id ?>'
   , brithTime: <?php echo $brith_time ?>
   , deathTime: <?php echo $death_time ?>
+  , life: <?php echo $life ?>
   }
 </script>
 

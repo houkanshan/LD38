@@ -11,6 +11,7 @@ const body = $(document.body)
 crtScreen($('#screen'))
 
 // let holdingComment = ''
+let gotDead = false
 Checkers.startDataUpdateChecker((status) => {
   if (GameData.deathTime !== status.deathTime) {
     // console.info(`death time updated ${GameData.deathTime} -> ${status.deathTime}`)
@@ -23,8 +24,19 @@ Checkers.startDataUpdateChecker((status) => {
       // holdingComment = status.comment
     // }
   }
+  updateLifeProgress(status.life)
+
+  if (status.is_dead && !gotDead) {
+    gotDead = true
+    startDeath()
+  }
 })
-Checkers.startLifeProgressChecker(startDeath)
+
+const lifeProgressBar = $('.progress-bar')
+function updateLifeProgress(life) {
+  lifeProgressBar.css('transform', `translateY(${- (1 - Math.min(1, life)) * 100}%)`)
+}
+// Checkers.startLifeProgressChecker(startDeath)
 
 doc.one('click', '#screen', startPlay)
 doc.on('submit', '.post-form', postComment)
@@ -43,9 +55,18 @@ function startGame() {
 }
 
 function startPlay() : void {
-  body.attr('data-state', 'main')
-
-  utils.delayedPromise(1000)()
+  $.post('extend_life.php')
+  .then((newLife) => {
+    if (newLife) {
+      updateLifeProgress(newLife)
+      console.info('Life extended.')
+      return utils.delayedPromise(2000)()
+    } else {
+      console.info('Can`t extend life.')
+    }
+  })
+  .then(() => body.attr('data-state', 'main'))
+  .then(utils.delayedPromise(1000))
   .then(() => {
     return typer($('#welcome-line-1'), `WELCOME TO THE GAME\nPLAYER #${utils.leftPad(GameData.userId)}`)
   })
@@ -58,16 +79,6 @@ function startPlay() : void {
   // .then(() => { GameData.gameStarted = true })
   // .then(utils.delayedPromise(500))
   // .then(() => { $('.comment-wrapper').show() })
-        
-  $.post('extend_life.php')
-    .then((newDeathTime) => {
-      if (newDeathTime) {
-        GameData.deathTime = newDeathTime
-        console.info('Life extended.')
-      } else {
-        console.info('Can`t extend life.')
-      }
-    })
 }
 
 function postComment(e:Event) {
