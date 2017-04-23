@@ -30,7 +30,7 @@ $death_time = get_death_time();
       <p>
         WELCOME TO THE GAME
         <br>
-        PLAYER #<?php echo $user_id ?>
+        PLAYER #<?php echo str_pad($user_id, 5, "0", STR_PAD_LEFT) ?>
       </p>
       <p>THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY TIME.</p>
     </div>

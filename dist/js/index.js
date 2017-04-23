@@ -10385,11 +10385,11 @@ function postComment(e) {
 var RE_ID_COMMENT = /(\d+),(.+)/;
 function updateComment(newComment) {
     var _a = newComment.match(RE_ID_COMMENT), _ = _a[0], id = _a[1], comment = _a[2];
-    __WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment').text("Player #" + id + " says:\n\"" + comment + "\"");
+    __WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment').text("Player #" + __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* leftPad */](id) + " says:\n\"" + comment + "\"");
 }
 function startDeath() {
     var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
-    var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
+    var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
     __WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title').text("The Game is Dead, it has lived for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
     __WEBPACK_IMPORTED_MODULE_2__checkers__["c" /* stopDataUpdateChecker */]();
     body.attr('data-state', 'dead');
@@ -10401,8 +10401,9 @@ function startDeath() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = now;
-/* harmony export (immutable) */ __webpack_exports__["a"] = parseTime;
+/* harmony export (immutable) */ __webpack_exports__["c"] = now;
+/* harmony export (immutable) */ __webpack_exports__["b"] = parseTime;
+/* harmony export (immutable) */ __webpack_exports__["a"] = leftPad;
 function now() {
     return Date.now() / 1000 | 0;
 }
@@ -10411,6 +10412,10 @@ function parseTime(sec) {
     var minutes = Math.floor((sec - (hours * 3600)) / 60);
     var seconds = sec - (hours * 3600) - (minutes * 60);
     return { hours: hours, minutes: minutes, seconds: seconds };
+}
+function leftPad(i) {
+    var pad = '00000';
+    return pad.substring(0, pad.length - i.toString().length) + i;
 }
 
 
@@ -10437,7 +10442,7 @@ function startLifeProgressChecker(onDie) {
         if (lifeCheckerStoped) {
             return;
         }
-        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* now */]();
+        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["c" /* now */]();
         var lifeRemain = Math.max(0, __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - now);
         var lifeTotal = __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].brithTime;
         lifeProgressBar.css('transform', "translateY(" + -(1 - lifeRemain / lifeTotal) * 100 + "%)");

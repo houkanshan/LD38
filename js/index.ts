@@ -49,7 +49,7 @@ function postComment(e:Event) {
 const RE_ID_COMMENT = /(\d+),(.+)/
 function updateComment(newComment: String): void {
   const [_, id, comment] = newComment.match(RE_ID_COMMENT)
-  $('#last-comment').text(`Player #${id} says:\n"${comment}"`)
+  $('#last-comment').text(`Player #${utils.leftPad(id)} says:\n"${comment}"`)
 }
 
 function startDeath() : void {
