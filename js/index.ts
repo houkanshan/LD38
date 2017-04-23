@@ -8,8 +8,6 @@ import typer from './typer'
 const doc = $(document)
 const body = $(document.body)
 
-startDeath()
-
 crtScreen($('#screen'))
 
 let holdingComment = ''
@@ -31,20 +29,26 @@ Checkers.startLifeProgressChecker(startDeath)
 doc.on('click', '.btn-start', startGame)
 doc.on('submit', '.post-form', postComment)
 
+setTimeout(function() {
+  body.addClass('on')
+}, 500)
+
 function startGame() : void {
   body.attr('data-state', 'main')
-  typer($('#welcome-line-1'), `WELCOME TO THE GAME\nPLAYER #${utils.leftPad(GameData.userId)}`)
+
+  utils.delayedPromise(1000)()
+  .then(() => {
+    return typer($('#welcome-line-1'), `WELCOME TO THE GAME\nPLAYER #${utils.leftPad(GameData.userId)}`)
+  })
   .then(utils.delayedPromise(500))
   .then(() => {
-    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY TIME.')
+    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT\nANY TIME.')
   })
   .then(utils.delayedPromise(1000))
   .then(() => updateComment(holdingComment))
   .then(() => { GameData.gameStarted = true })
   .then(utils.delayedPromise(500))
-  .then(() => {
-    $('.comment-wrapper').show()
-  })
+  .then(() => { $('.comment-wrapper').show() })
         
   $.post('extend_life.php')
     .then((newDeathTime) => {

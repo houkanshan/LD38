@@ -16,15 +16,18 @@ $death_time = get_death_time();
   <title>LD38</title>
   <link rel="stylesheet" href="dist/css/index.css?v=<?php echo VERSION ?>">
 </head>
-<body data-state="title">
+<body data-state="<?php echo $is_dead ? 'dead' : 'title'?>">
+
+<div id="computer">
+<div id="screen-wrapper">
 <div id="screen" class="crt-container">
+
   <?php if (!$is_dead) { ?>
 
   <div id="stage-title" class="stage">
-    <div class="progress-overlay">
-      <div class="progress-bar"></div>
-    </div>
-    <a class="btn-start" href="javascript:;">- click to start -</a>
+    <div class="progress-overlay"><div class="progress-bar"></div></div>
+    <h1 id="title"></h1>
+    <a class="btn-start" href="javascript:;"></a>
   </div>
   <div id="stage-main" class="stage">
     <div id="welcome">
@@ -34,7 +37,7 @@ $death_time = get_death_time();
     <p id="last-comment-wrapper"><span id="last-comment"></span></p>
     <form class="post-form">
       <div class="comment-wrapper">
-        <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off">
+        <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="30">
       </div>
     </form>
   </div>
@@ -43,6 +46,9 @@ $death_time = get_death_time();
   <div id="stage-dead" class="stage">
     <div id="end-title"></div>
   </div>
+
+</div>
+</div>
 </div>
 
 <script>

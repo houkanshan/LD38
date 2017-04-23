@@ -10347,7 +10347,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var doc = __WEBPACK_IMPORTED_MODULE_0_jquery__(document);
 var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
-startDeath();
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__crt__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#screen'));
 var holdingComment = '';
 __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](function (status) {
@@ -10367,20 +10366,24 @@ __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](functi
 __WEBPACK_IMPORTED_MODULE_2__checkers__["b" /* startLifeProgressChecker */](startDeath);
 doc.on('click', '.btn-start', startGame);
 doc.on('submit', '.post-form', postComment);
+setTimeout(function () {
+    body.addClass('on');
+}, 500);
 function startGame() {
     body.attr('data-state', 'main');
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-1'), "WELCOME TO THE GAME\nPLAYER #" + __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* leftPad */](__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].userId))
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
+    __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000)()
         .then(function () {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY TIME.');
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-1'), "WELCOME TO THE GAME\nPLAYER #" + __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* leftPad */](__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].userId));
     })
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](1000))
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
+        .then(function () {
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT\nANY TIME.');
+    })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000))
         .then(function () { return updateComment(holdingComment); })
         .then(function () { __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].gameStarted = true; })
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
-        .then(function () {
-        __WEBPACK_IMPORTED_MODULE_0_jquery__('.comment-wrapper').show();
-    });
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
+        .then(function () { __WEBPACK_IMPORTED_MODULE_0_jquery__('.comment-wrapper').show(); });
     __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php')
         .then(function (newDeathTime) {
         if (newDeathTime) {
@@ -10414,7 +10417,7 @@ function updateComment(newComment) {
     }
     lastComment = newComment;
     var _a = newComment.match(RE_ID_COMMENT), _ = _a[0], id = _a[1], comment = _a[2];
-    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment'), "Player #" + __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* leftPad */](id) + " says:\n\"" + comment + "\"");
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment'), "Player #" + __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* leftPad */](id) + " says:\n\"" + comment + "\"");
 }
 function startDeath() {
     var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
@@ -10434,8 +10437,8 @@ function startDeath() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 /* harmony export (immutable) */ __webpack_exports__["d"] = now;
 /* harmony export (immutable) */ __webpack_exports__["c"] = parseTime;
-/* harmony export (immutable) */ __webpack_exports__["a"] = leftPad;
-/* harmony export (immutable) */ __webpack_exports__["b"] = delayedPromise;
+/* harmony export (immutable) */ __webpack_exports__["b"] = leftPad;
+/* harmony export (immutable) */ __webpack_exports__["a"] = delayedPromise;
 
 function now() {
     return Date.now() / 1000 | 0;

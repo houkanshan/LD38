@@ -1,31 +1,55 @@
 @require "variables"
 @require "mixins"
 @require "normalize.css"
+@require 'font'
 @require "crt"
+@require "turn-on"
+
+html, body
+  height: 100%
+  min-height: 654px
+  overflow: hidden
+  font: 8px/10px 'gamefont'
 
 body
   user-select: none
+  background: url(../pics/background.png) top left \/ 200px 200px
+
+#computer
+  size: 487px 737px
+  background: url(../pics/foreground.png) top left \/ @width @height no-repeat
+  position: absolute
+  left: 50%
+  margin-left: (-@width/2)
+  bottom: -90px
 
 .stage
   display: none
 
-[data-state="title"]
-  #stage-title
-    display: block
+.on
+  &[data-state="title"]
+    #stage-title
+      display: block
 
-[data-state="main"]
-  #stage-main
-    display: block
+  &[data-state="main"]
+    #stage-main
+      display: block
 
-[data-state="dead"]
-  #stage-dead
-    display: block
+  &[data-state="dead"]
+    #stage-dead
+      display: block
+
+#screen-wrapper
+  overflow: hidden
+  size: $screenWidth $screenHeight
+  background: $colorScreen
+  margin: 48px auto 0
+  padding-left: 1px
 
 #screen
-  background: $colorScreen;
-  border: 3px solid $colorScreenBorder
-  size: 500px
-  color: $colorScreenText;
+  background: $colorScreen
+  size: 100%
+  color: $colorScreenText
   overflow: hidden
   position: relative
   word-wrap: break-word
@@ -47,13 +71,29 @@ body
     background: #000
     transition: transform 0.2s
 
+#title
 .btn-start
-  text-shadow: 1px 1px 0 #000
-  left: 0
-  right: 0
-  position: absolute
-  bottom: 50px
-  text-align: center
+  position: relative
+  z-index: 1
+#title
+  size: 213px 121px
+  background: url(../pics/title1.png) left top \/ @width @height no-repeat
+  margin: 10px auto 0
+
+@keyframes fade-inout
+  0%
+    opacity: 0
+  50%
+    opacity: 1
+  100%
+    opacity: 0
+
+.btn-start
+  display: block
+  size: 167px 8.5px
+  background: url(../pics/title2.png) left top \/ @width @height no-repeat
+  margin: 20px auto
+  animation: 4s fade-inout ease-in-out infinite
 
 #stage-title
 #stage-dead
@@ -62,36 +102,34 @@ body
 #last-comment-wrapper
   white-space: pre-line
   position: absolute
-  bottom: 50px
-  left: 10px
-  right: 10px
+  bottom: 10px
 
 #welcome
-  margin: 10px
   white-space: pre-line
   p
-    margin: 0 0 10px
+    margin: -11px 0 10px
 
 .comment-wrapper
   display: none
   background: #000
   border: 1px solid #fff
   position: absolute
-  left: 10px
+  bottom: 0
+  left: 0
   right: @left
-  bottom: 10px
   input[name="comment"]
     color: #fff
     outline: none
-    padding: 3px 5px
+    padding: 1px 2px
     background: #000
     border: none
     width: 100%
     box-sizing: border-box
+    font: 8px/10px 'gameFont'
     &::placeholder
       color: @color
 
 #stage-dead
   #end-title
-    margin: 200px 10px 10px
+    margin: 200px 0 0
     white-space: pre-line
