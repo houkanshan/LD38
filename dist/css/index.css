@@ -467,8 +467,8 @@ template {
   pointer-events: none;
 }
 .on #screen {
-  -webkit-animation: turn-on 4s linear;
-          animation: turn-on 4s linear;
+  -webkit-animation: turn-on 3s linear;
+          animation: turn-on 3s linear;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
@@ -566,6 +566,7 @@ body {
 }
 body:before {
   content: '';
+  text-align: center;
   position: absolute;
   left: 0;
   top: 0;
@@ -574,7 +575,18 @@ body:before {
   background: #000;
   z-index: 1000;
 }
-body.on:before {
+body:after {
+  content: 'Loading...';
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 100%;
+  margin-top: -10px;
+  z-index: 2000;
+  color: #fff;
+}
+body.on:before,
+body.on:after {
   display: none;
 }
 #computer {
@@ -709,7 +721,7 @@ body.on:before {
   color: #fff;
 }
 #stage-dead #end-title {
-  margin: 200px 0 0;
+  margin: 62px 0 0;
   white-space: pre-line;
 }
 @-webkit-keyframes fade-inout {

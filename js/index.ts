@@ -8,6 +8,8 @@ import typer from './typer'
 const doc = $(document)
 const body = $(document.body)
 
+startDeath()
+
 crtScreen($('#screen'))
 
 let holdingComment = ''
@@ -95,9 +97,16 @@ function updateComment(newComment: string) {
 function startDeath() : void {
   const lifeTime = GameData.deathTime - GameData.brithTime
   const {minutes, hours, seconds} = utils.parseTime(lifeTime)
-  typer($('#end-title'), `The Game is Dead,\nit has lived for ${hours} hours ${minutes} minutes ${seconds} seconds.`)
 
-  Checkers.stopDataUpdateChecker()
+  utils.delayedPromise(3000)()
+  .then(() => {
+    return typer($('#end-title'), `The Game is Dead,\nit has lived for ${hours} hours ${minutes} minutes ${seconds} seconds.`)
+  })
+  .then(utils.delayedPromise(500))
+  .then(() => updateComment(holdingComment))
+  .then(() => { GameData.gameStarted = true })
+  .then(utils.delayedPromise(500))
+  .then(() => { $('.comment-wrapper').show() })
 
   body.attr('data-state', 'dead')
 }

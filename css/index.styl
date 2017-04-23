@@ -16,6 +16,7 @@ body
   background: url(../pics/background.png) top left \/ 200px 200px
   &:before
     content: ''
+    text-align: center
     position: absolute
     left: 0
     top: 0
@@ -23,7 +24,17 @@ body
     bottom: 0
     background: #000
     z-index: 1000
+  &:after
+    content: 'Loading...'
+    position: absolute
+    text-align: center
+    top: 50%
+    width: 100%
+    margin-top: -10px
+    z-index: 2000
+    color: #fff
   &.on:before
+  &.on:after
     display: none
 
 
@@ -146,5 +157,5 @@ body
 
 #stage-dead
   #end-title
-    margin: 200px 0 0
+    margin: 62px 0 0
     white-space: pre-line

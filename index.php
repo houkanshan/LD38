@@ -34,18 +34,19 @@ $death_time = get_death_time();
       <p id="welcome-line-1"></p>
       <p id="welcome-line-2"></p>
     </div>
-    <p id="last-comment-wrapper"><span id="last-comment"></span></p>
-    <form class="post-form">
-      <div class="comment-wrapper">
-        <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="30">
-      </div>
-    </form>
   </div>
 
   <?php } ?>
   <div id="stage-dead" class="stage">
     <div id="end-title"></div>
   </div>
+
+  <p id="last-comment-wrapper"><span id="last-comment"></span></p>
+  <form class="post-form">
+    <div class="comment-wrapper">
+      <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="30">
+    </div>
+  </form>
 
 </div>
 </div>

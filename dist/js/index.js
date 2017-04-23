@@ -10347,6 +10347,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var doc = __WEBPACK_IMPORTED_MODULE_0_jquery__(document);
 var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
+startDeath();
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__crt__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#screen'));
 var holdingComment = '';
 __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](function (status) {
@@ -10432,8 +10433,15 @@ function updateComment(newComment) {
 function startDeath() {
     var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
     var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["c" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), "The Game is Dead,\nit has lived for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
-    __WEBPACK_IMPORTED_MODULE_2__checkers__["c" /* stopDataUpdateChecker */]();
+    __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](3000)()
+        .then(function () {
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), "The Game is Dead,\nit has lived for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
+    })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
+        .then(function () { return updateComment(holdingComment); })
+        .then(function () { __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].gameStarted = true; })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
+        .then(function () { __WEBPACK_IMPORTED_MODULE_0_jquery__('.comment-wrapper').show(); });
     body.attr('data-state', 'dead');
 }
 
@@ -10486,7 +10494,7 @@ function delayedPromise(time) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = startLifeProgressChecker;
 /* unused harmony export stopLifeChecker */
 /* harmony export (immutable) */ __webpack_exports__["a"] = startDataUpdateChecker;
-/* harmony export (immutable) */ __webpack_exports__["c"] = stopDataUpdateChecker;
+/* unused harmony export stopDataUpdateChecker */
 
 
 
