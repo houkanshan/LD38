@@ -468,7 +468,7 @@ body {
   height: 100%;
   min-height: 654px;
   overflow: hidden;
-  font: 6px/8px 'gamefont';
+  font: 6px/10px 'gamefont';
   margin: 0;
 }
 * {
@@ -623,7 +623,7 @@ body.hide-loading-layer:before {
   width: 167px;
   height: 8.5px;
   background: url("../pics/title2.png?v=2") left top/167px 8.5px no-repeat;
-  margin: 20px auto;
+  margin: 17px auto;
   -webkit-animation: 2s fade-inout ease-in alternate infinite;
           animation: 2s fade-inout ease-in alternate infinite;
 }
@@ -650,7 +650,7 @@ body.hide-loading-layer:before {
   white-space: pre-line;
 }
 #welcome p {
-  margin: -6px 0 6px;
+  margin: -10px 0 6px;
 }
 .comment-wrapper {
   background: #000;
@@ -708,6 +708,11 @@ body.hide-loading-layer:before {
   #computer {
     bottom: 0;
   }
+}
+.preload {
+  position: absolute;
+  z-index: -100;
+  visibility: hidden;
 }
 @-webkit-keyframes fade-inout {
   0% {

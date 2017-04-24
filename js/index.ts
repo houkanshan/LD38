@@ -87,11 +87,11 @@ function startPlay() : void {
 
   .then(() => body.attr('data-state', 'login'))
   .then(utils.delayedPromise(500))
-  .then(() => $("#login-text").text('Login.'))
+  .then(() => $("#login-text").text('Logging in.'))
   .then(utils.delayedPromise(500))
-  .then(() => $("#login-text").text('Login..'))
+  .then(() => $("#login-text").text('Logging in..'))
   .then(utils.delayedPromise(500))
-  .then(() => $("#login-text").text('Login...'))
+  .then(() => $("#login-text").text('Logging in...'))
   .then(utils.delayedPromise(500))
 
   .then(() => body.attr('data-state', 'main'))

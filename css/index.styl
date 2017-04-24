@@ -9,7 +9,7 @@ html, body
   height: 100%
   min-height: 654px
   overflow: hidden
-  font: 6px/8px 'gamefont'
+  font: 6px/10px 'gamefont'
   margin: 0
 *
   -webkit-tap-hightlight-color: rgba(255,255,255,0)
@@ -158,7 +158,7 @@ body
   display: block
   size: 167px 8.5px
   background: url(../pics/title2.png?v=2) left top \/ @width @height no-repeat
-  margin: 20px auto
+  margin: 17px auto
   animation: 2s fade-inout ease-in alternate infinite
 
 #login-text
@@ -182,7 +182,7 @@ body
 #welcome
   white-space: pre-line
   p
-    margin: -6px 0 6px
+    margin: -10px 0 6px
 
 .comment-wrapper
   background: #000
@@ -218,5 +218,10 @@ body
 @media screen and (min-height: 900px)
   #computer
     bottom: 0
+
+.preload
+  position: absolute
+  z-index: -100
+  visibility: hidden
 
 
