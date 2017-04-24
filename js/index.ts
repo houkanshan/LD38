@@ -24,6 +24,7 @@ Checkers.startDataUpdateChecker((status) => {
       // holdingComment = status.comment
     // }
   }
+  GameData.life = status.life
   updateLifeProgress(status.life)
 
   if (status.is_dead && !gotDead) {

@@ -16,6 +16,7 @@ $death_time = get_death_time();
   <meta charset="UTF-8">
   <title>LD38</title>
   <link rel="stylesheet" href="dist/css/index.css?v=<?php echo VERSION ?>">
+  <meta name="viewport" content="user-scalable=no, width=540px">
 </head>
 <body data-state="<?php echo $is_dead ? 'dead' : 'title'?>">
 

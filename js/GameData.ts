@@ -4,5 +4,6 @@ export default {
     userId: Data.userId,
     brithTime: Data.brithTime,
     deathTime: Data.deathTime,
-    gameStarted: false
+    gameStarted: false,
+    life: Data.life,
 }
