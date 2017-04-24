@@ -10559,7 +10559,7 @@ __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](functi
 });
 var lifeProgressBar = __WEBPACK_IMPORTED_MODULE_0_jquery__('.progress-bar');
 function updateLifeProgress(life) {
-    lifeProgressBar.css('transform', "translateY(" + -(1 - Math.min(1, life)) * 100 + "%)");
+    lifeProgressBar.css('transform', "translateY(" + (1 - Math.min(1, life)) * 100 + "%)");
 }
 doc.one('click', '#stage-title', startPlay);
 doc.on('input propertychange', 'input[name=comment]', __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* onlyASCII */]);

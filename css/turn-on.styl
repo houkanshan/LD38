@@ -1,30 +1,31 @@
 @keyframes turn-on
   0%
+    opacity: 0
+  29%
+    transform: none
+    opacity: 0
+  30%
     transform: scale(1, 0.8) translate3d(0, 0, 0)
     filter: brightness(30)
     opacity: 1
-  3.5%
+  33.5%
     transform: scale(1.5, 0.8) translate3d(10%, 100%, 0)
-  3.6%
+  33.6%
     transform: scale(1.5, 0.8) translate3d(0, -100%, 0)
     opacity: 1
-  9%
+  44%
     transform: scale(1.5, 0.6) translate3d(10%, 100%, 0)
     filter: brightness(30)
     opacity: 0
-  40%
+  54%
     transform: scale(1, 1) translate3d(0, 0, 0)
-    filter: contrast(0) brightness(0)
-    opacity: 0
-  80%
-    transform: scale(1, 1) translate3d(0, 0, 0)
-    filter: contrast(1) brightness(1.2) saturate(1.3)
-    opacity: 1
-  80%
+    filter: contrast(1) brightness(1.2)
+    opacity: 0.6
+  100%
     transform: none
     filter: none
     opacity: 1
 
 .on #screen
-  animation: turn-on 3s linear
+  animation: turn-on 1s linear
   animation-fill-mode: forwards

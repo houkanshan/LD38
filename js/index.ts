@@ -35,7 +35,7 @@ Checkers.startDataUpdateChecker((status) => {
 
 const lifeProgressBar = $('.progress-bar')
 function updateLifeProgress(life) {
-  lifeProgressBar.css('transform', `translateY(${- (1 - Math.min(1, life)) * 100}%)`)
+  lifeProgressBar.css('transform', `translateY(${(1 - Math.min(1, life)) * 100}%)`)
 }
 // Checkers.startLifeProgressChecker(startDeath)
 
