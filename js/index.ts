@@ -4,6 +4,7 @@ import * as Checkers from './checkers'
 import GameData from './GameData'
 import crtScreen from './crt'
 import typer from './typer'
+import './bgm'
 
 const doc = $(document)
 const body = $(document.body)
