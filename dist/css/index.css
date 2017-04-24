@@ -427,7 +427,7 @@ template {
 }
 
 @font-face {
-  font-family: 'gameFont';
+  font-family: 'gamefont';
   src: url("../fonts/font.ttf") format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -765,7 +765,7 @@ body.on:after {
   border: none;
   width: 100%;
   box-sizing: border-box;
-  font: 8px/10px 'gameFont';
+  font: 8px/10px 'gamefont';
 }
 .comment-wrapper input[name="comment"]:focus::-webkit-input-placeholder {
   color: transparent;
