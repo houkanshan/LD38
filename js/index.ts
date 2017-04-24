@@ -94,11 +94,11 @@ function startPlay() : void {
   .then(() => body.attr('data-state', 'main'))
   .then(utils.delayedPromise(1000))
   .then(() => {
-    return typer($('#welcome-line-1'), `WELCOME TO THE GAME\nPLAYER #${utils.leftPad(GameData.userId)}`)
+    return typer($('#welcome-line-1'), `Welcome back, PLAYER #${utils.leftPad(GameData.userId)}`)
   })
   .then(utils.delayedPromise(500))
   .then(() => {
-    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY TIME.')
+    return typer($('#welcome-line-2'), 'The game has already started dying,\nmeanwhile, you are free to leave any\nmessage or leave the page at any time.')
   })
   // .then(utils.delayedPromise(1000))
   // .then(() => updateComment(holdingComment))

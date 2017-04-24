@@ -10615,11 +10615,11 @@ function startPlay() {
         .then(function () { return body.attr('data-state', 'main'); })
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](1000))
         .then(function () {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-1'), "WELCOME TO THE GAME\nPLAYER #" + __WEBPACK_IMPORTED_MODULE_1__utils__["c" /* leftPad */](__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].userId));
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-1'), "Welcome back, PLAYER #" + __WEBPACK_IMPORTED_MODULE_1__utils__["c" /* leftPad */](__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].userId));
     })
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
         .then(function () {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY TIME.');
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'The game has already started dying,\nmeanwhile, you are free to leave any\nmessage or leave the page at any time.');
     });
 }
 function postComment(e) {
