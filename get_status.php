@@ -13,6 +13,7 @@ try {
         "life" => get_life(),
     );
 } catch (Exception $e) {
+    write_log(var_dump($e));
     header(':', true, 500);
 }
 

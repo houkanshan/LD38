@@ -18,7 +18,7 @@ date_default_timezone_set('UTC');
 
 function safe_get_contents($filename) {
   $res = file_get_contents($filename);
-  if ($res === FALSE) {
+  if (!$res) {
     raise_e("Get $filename error: $res");
   } else {
     return $res;
@@ -147,9 +147,18 @@ function get_life() {
     $life_info = get_last_life_info();
     $last_time = $life_info[1];
     $last_life = $life_info[0];
+    if (!$life_info) {
+      write_log("no life info but continued: ".json_encode($life_info));
+    }
+    if ($life_info && !$last_life) {
+      write_log("has life info but no last_life: ".json_encode($life_info).", $last_life");
+    }
     $curr_time = time();
     $duration_hour = ($curr_time - $last_time) / 60.0 / 60.0 / HALF_LIFE_TIME;
     $new_life = $last_life / pow(2, $duration_hour); // half life
+    if ($new_life === 0) {
+      write_log("0 in counting new life.");
+    }
     // echo $last_life;
     // echo "\n";
     // echo $duration;
@@ -168,7 +177,10 @@ function get_last_life_info() {
 }
 
 function update_life($life, $time) {
-  file_put_contents(FILE_LIFE, $life.','.$time.PHP_EOL, LOCK_EX);
+  $res = file_put_contents(FILE_LIFE, $life.','.$time.PHP_EOL, LOCK_EX);
+  if (!$res) {
+    write_log("maybe file writing error: $res");
+  }
   return $life;
 }
 
