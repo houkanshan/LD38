@@ -145,7 +145,8 @@ function startDeath() : void {
 
   utils.delayedPromise(2000)()
   .then(() => {
-    return typer($('#end-title'), 'Game Over')
+    $('#end-title', 'Game Over')
+    // return typer($('#end-title'), 'Game Over')
   })
   .then(utils.delayedPromise(500))
   .then(() => {

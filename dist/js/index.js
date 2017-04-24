@@ -10667,7 +10667,7 @@ function startDeath() {
     var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["d" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
     __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](2000)()
         .then(function () {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), 'Game Over');
+        __WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title', 'Game Over');
     })
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
         .then(function () {
