@@ -10906,9 +10906,9 @@ function startShowComment() {
 function startDeath() {
     var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
     var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["d" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
-    __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](2000)()
+    __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](1000)()
         .then(function () {
-        __WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title', 'Game Over');
+        __WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title').text('Game Over');
     })
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
         .then(function () {

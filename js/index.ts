@@ -157,9 +157,9 @@ function startDeath() : void {
   const lifeTime = GameData.deathTime - GameData.brithTime
   const {minutes, hours, seconds} = utils.parseTime(lifeTime)
 
-  utils.delayedPromise(2000)()
+  utils.delayedPromise(1000)()
   .then(() => {
-    $('#end-title', 'Game Over')
+    $('#end-title').text('Game Over')
     // return typer($('#end-title'), 'Game Over')
   })
   .then(utils.delayedPromise(500))
