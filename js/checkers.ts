@@ -29,7 +29,13 @@ export function startDataUpdateChecker(onData: (any) => any) {
     if (dataUpdateCheckerStoped) { return }
     $.get('get_status.php')
       .then((status) => {
-        onData(status)
+        onData({
+          comment: status.a,
+          deathTime: status.b,
+          is_dead: status.c,
+          life: status.d,
+          can_extend: status.e,
+        })
       })
       .always(() => {
         setTimeout(checkDataUpdate, 5000)

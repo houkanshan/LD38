@@ -58,10 +58,12 @@ if (document.readyState === 'complete') {
 
 function startGame() {
   if (body.hasClass('on')) { return }
+   updateLifeProgress(GameData.life)
    body.addClass('on')
+   body.addClass('compute-on')
    setTimeout(function() {
-     body.addClass('compute-on')
-   }, 1000)
+     body.addClass('hide-loading-layer')
+   }, 1010)
 }
 
 function startPlay() : void {
@@ -141,7 +143,7 @@ function startDeath() : void {
   const lifeTime = GameData.deathTime - GameData.brithTime
   const {minutes, hours, seconds} = utils.parseTime(lifeTime)
 
-  utils.delayedPromise(3000)()
+  utils.delayedPromise(2000)()
   .then(() => {
     return typer($('#end-title'), 'Game Over')
   })

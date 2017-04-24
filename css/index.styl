@@ -3,7 +3,7 @@
 @require "normalize.css"
 @require 'font'
 @require "crt"
-@require "turn-on"
+// @require "turn-on"
 
 html, body
   height: 100%
@@ -25,20 +25,15 @@ body
     top: 0
     right: 0
     bottom: 0
-    background: #000
+    background: #fff
     z-index: 1000
-  &:after
-    content: 'Loading...'
-    position: absolute
-    text-align: center
-    top: 50%
-    width: 100%
-    margin-top: -10px
-    z-index: 2000
-    color: #fff
+    pointer-events: none
   &.on:before
-  &.on:after
+    opacity: 0
+    transition: opacity 1s ease-in
+  &.hide-loading-layer:before
     display: none
+
 
 #last-comment-wrapper
 .comment-wrapper

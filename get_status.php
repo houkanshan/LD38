@@ -7,12 +7,17 @@ header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 
 try {
+    // a comment
+    // b deathTime
+    // c is_dead
+    // d life
+    // e can_extend
     $status = array(
-        "comment" => get_last_comment(),
-        "deathTime" => get_death_time(),
-        "is_dead" => is_dead(),
-        "life" => get_life(),
-        "can_extend" => can_extend_life($ip),
+        "a" => get_last_comment(),
+        "b" => get_death_time(),
+        "c" => is_dead(),
+        "d" => get_life(),
+        "e" => can_extend_life($ip),
     );
 } catch (Exception $e) {
     write_log(var_dump($e));

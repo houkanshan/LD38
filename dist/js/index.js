@@ -10332,12 +10332,12 @@ return jQuery;
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
-    userId: Data.userId,
-    brithTime: Data.brithTime,
-    deathTime: Data.deathTime,
-    gameStarted: false,
-    life: Data.life,
-    canExtend: Data.canExtend
+    userId: Data.a,
+    brithTime: Data.b,
+    deathTime: Data.c,
+    life: Data.d,
+    canExtend: Data.e,
+    gameStarted: false
 });
 
 
@@ -10429,7 +10429,13 @@ function startDataUpdateChecker(onData) {
         }
         __WEBPACK_IMPORTED_MODULE_2_jquery__["get"]('get_status.php')
             .then(function (status) {
-            onData(status);
+            onData({
+                comment: status.a,
+                deathTime: status.b,
+                is_dead: status.c,
+                life: status.d,
+                can_extend: status.e
+            });
         })
             .always(function () {
             setTimeout(checkDataUpdate, 5000);
@@ -10583,10 +10589,12 @@ function startGame() {
     if (body.hasClass('on')) {
         return;
     }
+    updateLifeProgress(__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].life);
     body.addClass('on');
+    body.addClass('compute-on');
     setTimeout(function () {
-        body.addClass('compute-on');
-    }, 1000);
+        body.addClass('hide-loading-layer');
+    }, 1010);
 }
 function startPlay() {
     if (gotDead) {
@@ -10657,7 +10665,7 @@ function updateComment(newComment) {
 function startDeath() {
     var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
     var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["d" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
-    __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](3000)()
+    __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](2000)()
         .then(function () {
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), 'Game Over');
     })

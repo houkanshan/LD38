@@ -61,13 +61,21 @@ $can_extend = can_extend_life($ip);
 </div>
 </div>
 
+<?php
+// a userId
+// b brithTime
+// c deathTime
+// d life
+// e canExtend
+?>
+
 <script>
   var Data = {
-    userId: '<?php echo $user_id ?>'
-  , brithTime: <?php echo $brith_time ?>
-  , deathTime: <?php echo $death_time ?>
-  , life: <?php echo $life ?>
-  , canExtend: <?php echo $can_extend ? 'true' : 'false' ?>
+    a: '<?php echo $user_id ?>'
+  , b: <?php echo $brith_time ?>
+  , c: <?php echo $death_time ?>
+  , d: <?php echo $life ?>
+  , e: <?php echo $can_extend ? 'true' : 'false' ?>
   }
 </script>
 
