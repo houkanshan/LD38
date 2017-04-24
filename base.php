@@ -7,11 +7,11 @@ define("FILE_BRITH_TIME", "data/brith_time.txt");
 define("FILE_GLOBAL_ID", "data/global_id.txt");
 define("DIR_USERS", "data/users/");
 define("FILE_COMMENTS", "data/comments.txt");
-define("USER_COOLING_TIME", 60*60); // 1 hour.
+define("USER_COOLING_TIME", 60*60*1.5); // 1.5 hour.
 
-define("INITIAL_LIFE_TIME", 24 * 15); // 240 hour
-define("DEAD_LIFE", 1 / pow(2, INITIAL_LIFE_TIME));
-define("HALF_LIFE_TIME", 24); // 24 hour
+define("INITIAL_LIFE_TIME", 24 * 16); // 240 hour
+define("HALF_LIFE_TIME", 12); // 24 hour
+define("DEAD_LIFE", 1 / pow(2, INITIAL_LIFE_TIME/HALF_LIFE_TIME));
 define("LIFE_EXTEND_EACH_TIME", 1 / INITIAL_LIFE_TIME);
 
 date_default_timezone_set('UTC');
@@ -198,7 +198,7 @@ function get_death_time() {
     $last_life_info = get_last_life_info();
     $last_life = $last_life_info[0];
     $last_time = $last_life_info[1];
-    $death_time = $last_time + log($last_life / DEAD_LIFE, 2) * 60 * 60;
+    $death_time = $last_time + log($last_life / DEAD_LIFE, 2) * 60 * 60 * HALF_LIFE_TIME;
     file_put_contents(FILE_DEATH_TIME, $death_time, LOCK_EX);
     return $death_time;
   } else {
