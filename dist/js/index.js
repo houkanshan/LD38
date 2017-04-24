@@ -10390,7 +10390,7 @@ function onlyASCII(e) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SeamlessLoop__ = __webpack_require__(7);
 
 var loop = new __WEBPACK_IMPORTED_MODULE_0__SeamlessLoop__["a" /* default */]();
-loop.addUri('dist/sounds/computer.ogg', 8180.363, "sound1");
+loop.addUri('dist/sounds/computer.ogg', 8179, "sound1");
 loop.callback(soundsLoaded);
 function soundsLoaded() { loop.start("sound1"); }
 ;
