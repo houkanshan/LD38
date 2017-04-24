@@ -10346,10 +10346,11 @@ return jQuery;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony export (immutable) */ __webpack_exports__["d"] = now;
-/* harmony export (immutable) */ __webpack_exports__["c"] = parseTime;
-/* harmony export (immutable) */ __webpack_exports__["b"] = leftPad;
-/* harmony export (immutable) */ __webpack_exports__["a"] = delayedPromise;
+/* harmony export (immutable) */ __webpack_exports__["e"] = now;
+/* harmony export (immutable) */ __webpack_exports__["d"] = parseTime;
+/* harmony export (immutable) */ __webpack_exports__["c"] = leftPad;
+/* harmony export (immutable) */ __webpack_exports__["b"] = delayedPromise;
+/* harmony export (immutable) */ __webpack_exports__["a"] = onlyASCII;
 
 function now() {
     return Date.now() / 1000 | 0;
@@ -10372,6 +10373,10 @@ function delayedPromise(time) {
         }, time);
         return dfd.promise();
     };
+}
+var RE_NON_ASCII = /[^\x00-\x7F]/g;
+function onlyASCII(e) {
+    e.currentTarget.value = e.currentTarget.value.replace(RE_NON_ASCII, '');
 }
 
 
@@ -10398,7 +10403,7 @@ function startLifeProgressChecker(onDie) {
         if (lifeCheckerStoped) {
             return;
         }
-        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["d" /* now */]();
+        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["e" /* now */]();
         var lifeRemain = Math.max(0, __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - now);
         var lifeTotal = __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].brithTime;
         lifeProgressBar.css('transform', "translateY(" + -(1 - lifeRemain / lifeTotal) * 100 + "%)");
@@ -10552,6 +10557,7 @@ function updateLifeProgress(life) {
     lifeProgressBar.css('transform', "translateY(" + -(1 - Math.min(1, life)) * 100 + "%)");
 }
 doc.one('click', '#stage-title', startPlay);
+doc.on('input propertychange', 'input[name=comment]', __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* onlyASCII */]);
 doc.on('submit', '.post-form', postComment);
 if (document.readyState === 'complete') {
     setTimeout(startGame, 500);
@@ -10575,18 +10581,18 @@ function startPlay() {
         if (newLife) {
             updateLifeProgress(newLife);
             console.info('Life extended.');
-            return __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000)();
+            return __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](1000)();
         }
         else {
             console.info('Can`t extend life.');
         }
     })
         .then(function () { return body.attr('data-state', 'main'); })
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](1000))
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](1000))
         .then(function () {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-1'), "WELCOME TO THE GAME\nPLAYER #" + __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* leftPad */](__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].userId));
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-1'), "WELCOME TO THE GAME\nPLAYER #" + __WEBPACK_IMPORTED_MODULE_1__utils__["c" /* leftPad */](__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].userId));
     })
-        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](500))
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
         .then(function () {
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY\nTIME.');
     });
@@ -10612,7 +10618,7 @@ function updateComment(newComment) {
         return;
     }
     var _a = newComment.match(RE_ID_COMMENT), _ = _a[0], id = _a[1], comment = _a[2];
-    var formatedComment = "Player #" + __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* leftPad */](id) + " says:\n\"" + comment + "\"";
+    var formatedComment = "Player #" + __WEBPACK_IMPORTED_MODULE_1__utils__["c" /* leftPad */](id) + " says:\n\"" + comment + "\"";
     if (!lastComment) {
         __WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment').text(formatedComment);
         lastComment = newComment;
@@ -10625,8 +10631,8 @@ function updateComment(newComment) {
 }
 function startDeath() {
     var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
-    var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["c" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
-    __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* delayedPromise */](3000)()
+    var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["d" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
+    __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](3000)()
         .then(function () {
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), "The Game is Dead,\nit has lived for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
     });

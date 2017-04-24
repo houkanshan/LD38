@@ -25,3 +25,8 @@ export function delayedPromise(time) {
     return dfd.promise()
   }
 }
+
+const RE_NON_ASCII = /[^\x00-\x7F]/g
+export function onlyASCII(e) {
+  e.currentTarget.value = e.currentTarget.value.replace(RE_NON_ASCII, '')
+}

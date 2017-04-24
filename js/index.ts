@@ -39,6 +39,7 @@ function updateLifeProgress(life) {
 // Checkers.startLifeProgressChecker(startDeath)
 
 doc.one('click', '#stage-title', startPlay)
+doc.on('input propertychange', 'input[name=comment]', utils.onlyASCII)
 doc.on('submit', '.post-form', postComment)
 
 if (document.readyState === 'complete') {
