@@ -1,7 +1,7 @@
 <?php include "base.php"; ?>
 
 <?php
-define("VERSION", 15);
+define("VERSION", 16);
 $ip = $_SERVER['REMOTE_ADDR'];
 $is_dead = is_dead();
 $user_id = get_id_by_ip($ip);
@@ -34,7 +34,7 @@ $can_extend = can_extend_life($ip);
   </div>
 
   <div id="stage-login" class="stage">
-    <div id="login-text">Login</div>
+    <div id="login-text">Logging in...</div>
   </div>
 
   <div id="stage-main" class="stage">
