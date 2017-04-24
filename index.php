@@ -53,7 +53,7 @@ $can_extend = can_extend_life($ip);
   <p id="last-comment-wrapper"><span id="last-comment"></span></p>
   <form class="post-form">
     <div class="comment-wrapper">
-      <input type="text" name="comment" placeholder="Leave your message" autocomplete="off" maxlength="143">
+      <input type="text" name="comment" placeholder="Leave your message here" autocomplete="off" maxlength="143">
     </div>
   </form>
   <div class="preload">
