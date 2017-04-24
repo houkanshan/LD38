@@ -10335,7 +10335,8 @@ return jQuery;
     userId: Data.userId,
     brithTime: Data.brithTime,
     deathTime: Data.deathTime,
-    gameStarted: false
+    gameStarted: false,
+    life: Data.life
 });
 
 
@@ -10445,10 +10446,14 @@ function stopDataUpdateChecker() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GameData__ = __webpack_require__(1);
 /* harmony export (immutable) */ __webpack_exports__["a"] = crtScreen;
+
 function crtScreen(screen) {
     function flicker() {
-        if (Math.random() > 0.9) {
+        console.log(__WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].life);
+        screen.css('opacity', __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].life / 2 + 0.5);
+        if (Math.random() > __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].life) {
             screen.addClass('flicker');
             setTimeout(function () {
                 screen.removeClass('flicker');
@@ -10546,6 +10551,7 @@ __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](functi
     if (status.comment) {
         updateComment(status.comment);
     }
+    __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].life = status.life;
     updateLifeProgress(status.life);
     if (status.is_dead && !gotDead) {
         gotDead = true;

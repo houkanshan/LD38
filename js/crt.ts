@@ -2,6 +2,7 @@ import GameData from './GameData'
 
 export default function crtScreen(screen: JQuery): void {
     function flicker() {
+        screen.css('opacity', GameData.life / 2 + 0.5)
         if (Math.random() > GameData.life) {
             screen.addClass('flicker')
             setTimeout(function() {
