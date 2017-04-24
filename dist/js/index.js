@@ -10589,7 +10589,7 @@ function startPlay() {
         if (newLife) {
             updateLifeProgress(newLife);
             console.info('Life extended.');
-            return __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](1000)();
+            return __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500)();
         }
         else {
             console.info('Can`t extend life.');

@@ -65,7 +65,7 @@ function startPlay() : void {
     if (newLife) {
       updateLifeProgress(newLife)
       console.info('Life extended.')
-      return utils.delayedPromise(1000)()
+      return utils.delayedPromise(500)()
     } else {
       console.info('Can`t extend life.')
     }
