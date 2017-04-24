@@ -615,14 +615,14 @@ body.hide-loading-layer:before {
 #title {
   width: 213px;
   height: 121px;
-  background: url("../pics/title1.png?v=1") left top/213px 121px no-repeat;
+  background: url("../pics/title1.png?v=2") left top/213px 121px no-repeat;
   margin: 10px auto 0;
 }
 .btn-start {
   display: block;
   width: 167px;
   height: 8.5px;
-  background: url("../pics/title2.png?v=1") left top/167px 8.5px no-repeat;
+  background: url("../pics/title2.png?v=2") left top/167px 8.5px no-repeat;
   margin: 20px auto;
   -webkit-animation: 2s fade-inout ease-in alternate infinite;
           animation: 2s fade-inout ease-in alternate infinite;
