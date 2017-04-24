@@ -8,7 +8,7 @@ import typer from './typer'
 const doc = $(document)
 const body = $(document.body)
 
-crtScreen($('#screen'))
+crtScreen($('#screen-wrapper'))
 
 // let holdingComment = ''
 let gotDead = false
@@ -48,7 +48,9 @@ if (document.readyState === 'complete') {
   window.onload = startGame
   setTimeout(startGame, 20000)
 }
+
 function startGame() {
+  if (body.hasClass('on')) { return }
    body.addClass('on')
    setTimeout(function() {
      body.addClass('compute-on')
@@ -74,7 +76,7 @@ function startPlay() : void {
   })
   .then(utils.delayedPromise(500))
   .then(() => {
-    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY\nTIME.')
+    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE\nPAGE AT ANY TIME.')
   })
   // .then(utils.delayedPromise(1000))
   // .then(() => updateComment(holdingComment))
@@ -119,7 +121,11 @@ function startDeath() : void {
 
   utils.delayedPromise(3000)()
   .then(() => {
-    return typer($('#end-title'), `The Game is Dead,\nit has lived for ${hours} hours ${minutes} minutes ${seconds} seconds.`)
+    return typer($('#end-title'), 'Game Over')
+  })
+  .then(utils.delayedPromise(500))
+  .then(() => {
+    return typer($('#end-word'), `The Game is now dead,\nit has lived for ${hours} hours,\n${minutes} minutes, ${seconds} seconds.`)
   })
   // .then(utils.delayedPromise(500))
   // .then(() => updateComment(holdingComment))

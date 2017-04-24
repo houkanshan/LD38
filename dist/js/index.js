@@ -10358,7 +10358,7 @@ function now() {
 function parseTime(sec) {
     var hours = Math.floor(sec / 3600);
     var minutes = Math.floor((sec - (hours * 3600)) / 60);
-    var seconds = sec - (hours * 3600) - (minutes * 60);
+    var seconds = Math.floor(sec - (hours * 3600) - (minutes * 60));
     return { hours: hours, minutes: minutes, seconds: seconds };
 }
 function leftPad(i) {
@@ -10537,7 +10537,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var doc = __WEBPACK_IMPORTED_MODULE_0_jquery__(document);
 var body = __WEBPACK_IMPORTED_MODULE_0_jquery__(document.body);
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__crt__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#screen'));
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__crt__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#screen-wrapper'));
 var gotDead = false;
 __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](function (status) {
     if (__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime !== status.deathTime) {
@@ -10567,6 +10567,9 @@ else {
     setTimeout(startGame, 20000);
 }
 function startGame() {
+    if (body.hasClass('on')) {
+        return;
+    }
     body.addClass('on');
     setTimeout(function () {
         body.addClass('compute-on');
@@ -10594,7 +10597,7 @@ function startPlay() {
     })
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
         .then(function () {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY\nTIME.');
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE\nPAGE AT ANY TIME.');
     });
 }
 function postComment(e) {
@@ -10634,7 +10637,11 @@ function startDeath() {
     var _a = __WEBPACK_IMPORTED_MODULE_1__utils__["d" /* parseTime */](lifeTime), minutes = _a.minutes, hours = _a.hours, seconds = _a.seconds;
     __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](3000)()
         .then(function () {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), "The Game is Dead,\nit has lived for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), 'Game Over');
+    })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
+        .then(function () {
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-word'), "The Game is now dead,\nit has lived for " + hours + " hours,\n" + minutes + " minutes, " + seconds + " seconds.");
     });
     body.attr('data-state', 'dead');
 }

@@ -81,13 +81,31 @@ body
 
 #screen
   background: $colorScreen
-  height: 100%
-  padding-left: 1px
+  padding: 6px
+  height: ($screenHeight - @padding*2)
   color: $colorScreenText
   overflow: hidden
   position: relative
   word-wrap: break-word
   word-break: break-word
+  &:before
+    content: ''
+    border: 1px solid #fff
+    position: absolute
+    left: 2px
+    top: @left
+    right: @left
+    bottom: @left
+    
+  &:after
+    content: ''
+    border: 1px solid #fff
+    position: absolute
+    left: 0
+    top: @left
+    right: @left
+    bottom: @left
+    z-index: -1
   a
     color: @color
     text-decoration: none
@@ -95,20 +113,28 @@ body
   .progress-bar
     z-index: 0
     position: absolute
+  .progress-overlay
+    top: 3px
+    left: @top
+    right: @top
+    bottom: @top
+    overflow: hidden
+  .progress-bar
     top: 0
-    left: 0
-    right: 0
-    bottom: 0
+    left: @top
+    right: @top
+    bottom: @top
   .progress-overlay
     background: #fff
   .progress-bar
     background: #000
     transition: transform 0.2s
 
+.stage
+  z-index: 1
 #title
 .btn-start
   position: relative
-  z-index: 1
 #title
   size: 213px 121px
   background: url(../pics/title1.png) left top \/ @width @height no-repeat
@@ -129,6 +155,8 @@ body
   margin: 20px auto
   animation: 4s fade-inout ease-in-out infinite
 
+.stage
+  z-index: 1
 #stage-title
 #stage-dead
   text-align: center
@@ -147,8 +175,8 @@ body
   background: #000
   border: 1px solid #fff
   position: absolute
-  bottom: 0
-  left: 0
+  bottom: 2px
+  left: 2px
   right: @left
   input[name="comment"]
     color: #fff
@@ -166,5 +194,10 @@ body
 
 #stage-dead
   #end-title
-    margin: 50px 0 0
+    margin: 10px 0 0
+    font-size: 20px
+    line-height: 20px
+    white-space: pre-line
+  #end-word
+    margin: 8px 0 0
     white-space: pre-line

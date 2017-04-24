@@ -20,8 +20,8 @@ $death_time = get_death_time();
 <body data-state="<?php echo $is_dead ? 'dead' : 'title'?>">
 
 <div id="computer">
-<div id="screen-wrapper">
-<div id="screen" class="crt-container">
+<div id="screen-wrapper" class="crt-container">
+<div id="screen">
 
   <?php if (!$is_dead) { ?>
 
@@ -40,12 +40,13 @@ $death_time = get_death_time();
   <?php } ?>
   <div id="stage-dead" class="stage">
     <div id="end-title"></div>
+    <div id="end-word"></div>
   </div>
 
   <p id="last-comment-wrapper"><span id="last-comment"></span></p>
   <form class="post-form">
     <div class="comment-wrapper">
-      <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="153">
+      <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="143">
     </div>
   </form>
 
