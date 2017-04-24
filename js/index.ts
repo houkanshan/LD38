@@ -27,6 +27,8 @@ Checkers.startDataUpdateChecker((status) => {
   GameData.life = status.life
   updateLifeProgress(status.life)
 
+  GameData.canExtend = status.canExtend;
+
   if (status.is_dead && !gotDead) {
     gotDead = true
     startDeath()
@@ -34,8 +36,12 @@ Checkers.startDataUpdateChecker((status) => {
 })
 
 const lifeProgressBar = $('.progress-bar')
+let progressUpdating = false
 function updateLifeProgress(life) {
+  if (progressUpdating) { return }
+  progressUpdating = true
   lifeProgressBar.css('transform', `translateY(${(1 - Math.min(1, life)) * 100}%)`)
+  setTimeout(function() { progressUpdating = false }, 300)
 }
 // Checkers.startLifeProgressChecker(startDeath)
 
@@ -60,16 +66,31 @@ function startGame() {
 
 function startPlay() : void {
   if (gotDead) { return }
-  $.post('extend_life.php')
-  .then((newLife) => {
-    if (newLife) {
-      updateLifeProgress(newLife)
-      console.info('Life extended.')
-      return utils.delayedPromise(500)()
+
+  $(".title-text").hide()
+
+  utils.delayedPromise(300)()
+  .then(() => {
+    if (GameData.canExtend) {
+      $.post('extend_life.php')
+      updateLifeProgress(GameData.life + 1 / 100)
+      // console.info('Life extended.')
+      GameData.canExtend = false
     } else {
-      console.info('Can`t extend life.')
+      // console.info('Can`t extend life.')
     }
   })
+  .then(utils.delayedPromise(800))
+
+  .then(() => body.attr('data-state', 'login'))
+  .then(utils.delayedPromise(500))
+  .then(() => $("#login-text").text('Login.'))
+  .then(utils.delayedPromise(500))
+  .then(() => $("#login-text").text('Login..'))
+  .then(utils.delayedPromise(500))
+  .then(() => $("#login-text").text('Login...'))
+  .then(utils.delayedPromise(500))
+
   .then(() => body.attr('data-state', 'main'))
   .then(utils.delayedPromise(1000))
   .then(() => {
@@ -77,7 +98,7 @@ function startPlay() : void {
   })
   .then(utils.delayedPromise(500))
   .then(() => {
-    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE\nPAGE AT ANY TIME.')
+    return typer($('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY TIME.')
   })
   // .then(utils.delayedPromise(1000))
   // .then(() => updateComment(holdingComment))

@@ -6,4 +6,5 @@ export default {
     deathTime: Data.deathTime,
     gameStarted: false,
     life: Data.life,
+    canExtend: Data.canExtend,
 }

@@ -8,6 +8,7 @@ $user_id = get_id_by_ip($ip);
 $brith_time = get_brith_time();
 $life = get_life();
 $death_time = get_death_time();
+$can_extend = can_extend_life($ip);
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +29,14 @@ $death_time = get_death_time();
 
   <div id="stage-title" class="stage">
     <div class="progress-overlay"><div class="progress-bar"></div></div>
-    <h1 id="title"></h1>
-    <a class="btn-start"></a>
+    <h1 id="title" class="title-text"></h1>
+    <a class="btn-start title-text"></a>
   </div>
+
+  <div id="stage-login" class="stage">
+    <div id="login-text">Login</div>
+  </div>
+
   <div id="stage-main" class="stage">
     <div id="welcome">
       <p id="welcome-line-1"></p>
@@ -61,6 +67,7 @@ $death_time = get_death_time();
   , brithTime: <?php echo $brith_time ?>
   , deathTime: <?php echo $death_time ?>
   , life: <?php echo $life ?>
+  , canExtend: <?php echo $can_extend ? 'true' : 'false' ?>
   }
 </script>
 

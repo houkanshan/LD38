@@ -9,7 +9,7 @@ html, body
   height: 100%
   min-height: 654px
   overflow: hidden
-  font: 8px/10px 'gamefont'
+  font: 6px/8px 'gamefont'
   margin: 0
 *
   -webkit-tap-hightlight-color: rgba(255,255,255,0)
@@ -60,9 +60,14 @@ body
 .on.compute-on
   #screen
     display: block
+
   &[data-state="title"]
     #stage-title
       cursor: pointer
+      display: block
+
+  &[data-state="login"]
+    #stage-login
       display: block
 
   &[data-state="main"]
@@ -161,6 +166,12 @@ body
   margin: 20px auto
   animation: 2s fade-inout ease-in alternate infinite
 
+#login-text
+  position: absolute
+  left: 6px
+  bottom: 6px
+  line-height: 1
+
 .stage
   z-index: 1
 #stage-title
@@ -170,12 +181,12 @@ body
 #last-comment-wrapper
   white-space: pre-line
   position: absolute
-  bottom: 10px
+  bottom: 12px
 
 #welcome
   white-space: pre-line
   p
-    margin: -11px 0 10px
+    margin: -6px 0 6px
 
 .comment-wrapper
   background: #000
@@ -187,12 +198,12 @@ body
   input[name="comment"]
     color: #fff
     outline: none
-    padding: 1px 2px
+    padding: 2px 3px 1px
     background: #000
     border: none
     width: 100%
     box-sizing: border-box
-    font: 8px/10px 'gamefont'
+    font: 6px/6px 'gamefont'
     &:focus::placeholder
       color: transparent
     &::placeholder

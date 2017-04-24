@@ -10336,7 +10336,8 @@ return jQuery;
     brithTime: Data.brithTime,
     deathTime: Data.deathTime,
     gameStarted: false,
-    life: Data.life
+    life: Data.life,
+    canExtend: Data.canExtend
 });
 
 
@@ -10552,14 +10553,21 @@ __WEBPACK_IMPORTED_MODULE_2__checkers__["a" /* startDataUpdateChecker */](functi
     }
     __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].life = status.life;
     updateLifeProgress(status.life);
+    __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].canExtend = status.canExtend;
     if (status.is_dead && !gotDead) {
         gotDead = true;
         startDeath();
     }
 });
 var lifeProgressBar = __WEBPACK_IMPORTED_MODULE_0_jquery__('.progress-bar');
+var progressUpdating = false;
 function updateLifeProgress(life) {
+    if (progressUpdating) {
+        return;
+    }
+    progressUpdating = true;
     lifeProgressBar.css('transform', "translateY(" + (1 - Math.min(1, life)) * 100 + "%)");
+    setTimeout(function () { progressUpdating = false; }, 300);
 }
 doc.one('click', '#stage-title', startPlay);
 doc.on('input propertychange', 'input[name=comment]', __WEBPACK_IMPORTED_MODULE_1__utils__["a" /* onlyASCII */]);
@@ -10584,17 +10592,26 @@ function startPlay() {
     if (gotDead) {
         return;
     }
-    __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php')
-        .then(function (newLife) {
-        if (newLife) {
-            updateLifeProgress(newLife);
-            console.info('Life extended.');
-            return __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500)();
+    __WEBPACK_IMPORTED_MODULE_0_jquery__(".title-text").hide();
+    __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](300)()
+        .then(function () {
+        if (__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].canExtend) {
+            __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php');
+            updateLifeProgress(__WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].life + 1 / 100);
+            __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].canExtend = false;
         }
         else {
-            console.info('Can`t extend life.');
         }
     })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](800))
+        .then(function () { return body.attr('data-state', 'login'); })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
+        .then(function () { return __WEBPACK_IMPORTED_MODULE_0_jquery__("#login-text").text('Login.'); })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
+        .then(function () { return __WEBPACK_IMPORTED_MODULE_0_jquery__("#login-text").text('Login..'); })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
+        .then(function () { return __WEBPACK_IMPORTED_MODULE_0_jquery__("#login-text").text('Login...'); })
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
         .then(function () { return body.attr('data-state', 'main'); })
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](1000))
         .then(function () {
@@ -10602,7 +10619,7 @@ function startPlay() {
     })
         .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](500))
         .then(function () {
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE\nPAGE AT ANY TIME.');
+        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#welcome-line-2'), 'THE GAME HAS ALREADY STARTED, YOU ARE FREE TO LEAVE THE PAGE AT ANY TIME.');
     });
 }
 function postComment(e) {

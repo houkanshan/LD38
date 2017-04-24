@@ -100,16 +100,11 @@ function update_user_active_time($ip, $id, $time) {
   return file_put_contents($file_user, "$id,$time", LOCK_EX);
 }
 
-function try_extend_life($ip) {
+function can_extend_life($ip) {
   if (is_dead()) { return false; }
-  $user_info = get_or_create_user_info($ip);
-  $user_id = $user_info[0];
-  $last_active_time = $user_info[1];
-  $curr_time = time();
 
-  // echo "userid: $user_id.\n";
-  // echo "last_active_time: $last_active_time.\n";
-  // echo "current_time:$curr_time.\n";
+  $user_info = get_or_create_user_info($ip);
+  $last_active_time = $user_info[1];
 
   if ($last_active_time) {
     if ($curr_time - $last_active_time < USER_COOLING_TIME) {
@@ -117,7 +112,21 @@ function try_extend_life($ip) {
       return false;
     }
   }
+  return true;
+}
+
+function try_extend_life($ip) {
+  if (!can_extend_life($ip)) { return false; }
   // echo "cool, update.";
+
+  $user_info = get_or_create_user_info($ip);
+  $user_id = $user_info[0];
+  $curr_time = time();
+
+  // echo "userid: $user_id.\n";
+  // echo "last_active_time: $last_active_time.\n";
+  // echo "current_time:$curr_time.\n";
+
   update_user_active_time($ip, $user_id, $curr_time);
   // $time_to_extend = 60 * 60 + rand(-600, 600);
   // return update_death_time(get_death_time() + $time_to_extend);
