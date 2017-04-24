@@ -1,7 +1,7 @@
 <?php include "base.php"; ?>
 
 <?php
-define("VERSION", 17);
+define("VERSION", 18);
 $ip = $_SERVER['REMOTE_ADDR'];
 $is_dead = is_dead();
 $user_id = get_id_by_ip($ip);
@@ -53,7 +53,7 @@ $can_extend = can_extend_life($ip);
   <p id="last-comment-wrapper"><span id="last-comment"></span></p>
   <form class="post-form">
     <div class="comment-wrapper">
-      <input type="text" name="comment" placeholder="Leave your comments" autocomplete="off" maxlength="143">
+      <input type="text" name="comment" placeholder="Leave your message" autocomplete="off" maxlength="143">
     </div>
   </form>
   <div class="preload">
