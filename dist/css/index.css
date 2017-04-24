@@ -798,6 +798,11 @@ body.on:after {
   margin: 8px 0 0;
   white-space: pre-line;
 }
+@media screen and (min-height: 900px) {
+  #computer {
+    bottom: 0;
+  }
+}
 @-webkit-keyframes fade-inout {
   0% {
     opacity: 0;
