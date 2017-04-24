@@ -124,6 +124,7 @@ function postComment(e:Event) {
 
 const RE_ID_COMMENT = /(\d+),(.+)/
 let lastComment = ''
+const commentsQueue = []
 function updateComment(newComment: string) {
   if (lastComment === newComment) { return }
   const [_, id, comment] = newComment.match(RE_ID_COMMENT)
@@ -135,8 +136,20 @@ function updateComment(newComment: string) {
     return $.Deferred().resolve().promise()
   } else {
     lastComment = newComment
-    return typer($('#last-comment'), formatedComment)
+    commentsQueue.push(formatedComment)
+    if (commentsQueue.length === 1) {
+      startShowComment()
+    }
   }
+}
+function startShowComment() {
+  if (!commentsQueue.length) { return }
+  return typer($('#last-comment'), commentsQueue[0])
+  .then(utils.delayedPromise(1000))
+  .then(() => { 
+    commentsQueue.shift() 
+    return startShowComment()
+  })
 }
 
 function startDeath() : void {

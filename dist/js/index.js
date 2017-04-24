@@ -10646,6 +10646,7 @@ function postComment(e) {
 }
 var RE_ID_COMMENT = /(\d+),(.+)/;
 var lastComment = '';
+var commentsQueue = [];
 function updateComment(newComment) {
     if (lastComment === newComment) {
         return;
@@ -10659,8 +10660,22 @@ function updateComment(newComment) {
     }
     else {
         lastComment = newComment;
-        return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment'), formatedComment);
+        commentsQueue.push(formatedComment);
+        if (commentsQueue.length === 1) {
+            startShowComment();
+        }
     }
+}
+function startShowComment() {
+    if (!commentsQueue.length) {
+        return;
+    }
+    return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#last-comment'), commentsQueue[0])
+        .then(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* delayedPromise */](1000))
+        .then(function () {
+        commentsQueue.shift();
+        return startShowComment();
+    });
 }
 function startDeath() {
     var lifeTime = __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_3__GameData__["a" /* default */].brithTime;
