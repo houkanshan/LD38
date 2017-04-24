@@ -7,7 +7,7 @@ define("FILE_BRITH_TIME", "data/brith_time.txt");
 define("FILE_GLOBAL_ID", "data/global_id.txt");
 define("DIR_USERS", "data/users/");
 define("FILE_COMMENTS", "data/comments.txt");
-define("USER_COOLING_TIME", 60); // 1 hour.
+define("USER_COOLING_TIME", 60*60); // 1 hour.
 
 define("INITIAL_LIFE_TIME", 240); // 240 hour
 define("DEAD_LIFE", 1 / pow(2, INITIAL_LIFE_TIME));
