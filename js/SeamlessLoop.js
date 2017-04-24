@@ -66,7 +66,7 @@ export default function SeamlessLoop() {
 	if(this.is.ff) this.stopDelay = 85;
 	if(this.is.opera) this.playDelay = 5;
 	if(this.is.opera) this.stopDelay = 0;
-	console.debug(this.playDelay + ", " + this.stopDelay);
+	// console.debug(this.playDelay + ", " + this.stopDelay);
 	this.next = 1;
 	this.audios = new Array();
 	this.actual = new Array();
