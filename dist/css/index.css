@@ -715,6 +715,18 @@ body.on:after {
   box-sizing: border-box;
   font: 8px/10px 'gameFont';
 }
+.comment-wrapper input[name="comment"]:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+.comment-wrapper input[name="comment"]:focus::-moz-placeholder {
+  color: transparent;
+}
+.comment-wrapper input[name="comment"]:focus:-ms-input-placeholder {
+  color: transparent;
+}
+.comment-wrapper input[name="comment"]:focus::placeholder {
+  color: transparent;
+}
 .comment-wrapper input[name="comment"]::-webkit-input-placeholder {
   color: #fff;
 }

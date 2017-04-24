@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10331,14 +10331,199 @@ return jQuery;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    userId: Data.userId,
+    brithTime: Data.brithTime,
+    deathTime: Data.deathTime,
+    gameStarted: false
+});
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/* harmony export (immutable) */ __webpack_exports__["d"] = now;
+/* harmony export (immutable) */ __webpack_exports__["c"] = parseTime;
+/* harmony export (immutable) */ __webpack_exports__["b"] = leftPad;
+/* harmony export (immutable) */ __webpack_exports__["a"] = delayedPromise;
+
+function now() {
+    return Date.now() / 1000 | 0;
+}
+function parseTime(sec) {
+    var hours = Math.floor(sec / 3600);
+    var minutes = Math.floor((sec - (hours * 3600)) / 60);
+    var seconds = sec - (hours * 3600) - (minutes * 60);
+    return { hours: hours, minutes: minutes, seconds: seconds };
+}
+function leftPad(i) {
+    var pad = '00000';
+    return pad.substring(0, pad.length - i.toString().length) + i;
+}
+function delayedPromise(time) {
+    return function () {
+        var dfd = __WEBPACK_IMPORTED_MODULE_0_jquery__["Deferred"]();
+        setTimeout(function () {
+            dfd.resolve();
+        }, time);
+        return dfd.promise();
+    };
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GameData__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
+/* unused harmony export startLifeProgressChecker */
+/* unused harmony export stopLifeChecker */
+/* harmony export (immutable) */ __webpack_exports__["a"] = startDataUpdateChecker;
+/* unused harmony export stopDataUpdateChecker */
+
+
+
+var lifeCheckerStoped = false;
+var lifeProgressBar = __WEBPACK_IMPORTED_MODULE_2_jquery__('.progress-bar');
+function startLifeProgressChecker(onDie) {
+    function checkLife() {
+        if (lifeCheckerStoped) {
+            return;
+        }
+        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["d" /* now */]();
+        var lifeRemain = Math.max(0, __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - now);
+        var lifeTotal = __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].brithTime;
+        lifeProgressBar.css('transform', "translateY(" + -(1 - lifeRemain / lifeTotal) * 100 + "%)");
+        if (lifeRemain === 0) {
+            onDie();
+        }
+        else {
+            setTimeout(checkLife, 500);
+        }
+    }
+    checkLife();
+}
+function stopLifeChecker() {
+    lifeCheckerStoped = true;
+}
+var dataUpdateCheckerStoped = false;
+function startDataUpdateChecker(onData) {
+    function checkDataUpdate() {
+        if (dataUpdateCheckerStoped) {
+            return;
+        }
+        __WEBPACK_IMPORTED_MODULE_2_jquery__["get"]('get_status.php')
+            .then(function (status) {
+            onData(status);
+        })
+            .always(function () {
+            setTimeout(checkDataUpdate, 5000);
+        });
+    }
+    checkDataUpdate();
+}
+function stopDataUpdateChecker() {
+    dataUpdateCheckerStoped = true;
+}
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = crtScreen;
+function crtScreen(screen) {
+    function flicker() {
+        if (Math.random() > 0.9) {
+            screen.addClass('flicker');
+            setTimeout(function () {
+                screen.removeClass('flicker');
+                if (Math.random() > 0.6) {
+                    setTimeout(function () { screen.addClass('flicker'); }, 50);
+                    setTimeout(function () { screen.removeClass('flicker'); }, 100);
+                }
+            }, 50);
+        }
+        setTimeout(flicker, 200);
+    }
+    flicker();
+}
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/* harmony export (immutable) */ __webpack_exports__["a"] = typer;
+
+function typer(el, text) {
+    var dfd = __WEBPACK_IMPORTED_MODULE_0_jquery__["Deferred"]();
+    var existHandle = el.data('typing-handle');
+    if (existHandle) {
+        clearTimeout(existHandle);
+    }
+    var currIndex = -1;
+    var currText = '';
+    var textLen = text.length;
+    function typeNext() {
+        el.data('typing-handle', null);
+        currIndex += 1;
+        var currChar = text[currIndex];
+        currText += currChar;
+        el.text(currText);
+        if (currIndex < textLen - 1) {
+            var delayTime = 50;
+            switch (currChar) {
+                case ' ':
+                    delayTime = 60;
+                    break;
+                case '\n':
+                    delayTime = 500;
+                    break;
+                case ',':
+                    delayTime = 400;
+                    break;
+                case '.':
+                    delayTime = 500;
+                    break;
+            }
+            var handle = setTimeout(typeNext, Math.random() * 100 + delayTime);
+            el.data('typing-handle', handle);
+        }
+        else {
+            dfd.resolve();
+        }
+    }
+    typeNext();
+    return dfd.promise();
+}
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__checkers__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GameData__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__crt__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__typer__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__GameData__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__crt__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__typer__ = __webpack_require__(5);
 
 
 
@@ -10446,191 +10631,6 @@ function startDeath() {
         return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__typer__["a" /* default */])(__WEBPACK_IMPORTED_MODULE_0_jquery__('#end-title'), "The Game is Dead,\nit has lived for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
     });
     body.attr('data-state', 'dead');
-}
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony export (immutable) */ __webpack_exports__["d"] = now;
-/* harmony export (immutable) */ __webpack_exports__["c"] = parseTime;
-/* harmony export (immutable) */ __webpack_exports__["b"] = leftPad;
-/* harmony export (immutable) */ __webpack_exports__["a"] = delayedPromise;
-
-function now() {
-    return Date.now() / 1000 | 0;
-}
-function parseTime(sec) {
-    var hours = Math.floor(sec / 3600);
-    var minutes = Math.floor((sec - (hours * 3600)) / 60);
-    var seconds = sec - (hours * 3600) - (minutes * 60);
-    return { hours: hours, minutes: minutes, seconds: seconds };
-}
-function leftPad(i) {
-    var pad = '00000';
-    return pad.substring(0, pad.length - i.toString().length) + i;
-}
-function delayedPromise(time) {
-    return function () {
-        var dfd = __WEBPACK_IMPORTED_MODULE_0_jquery__["Deferred"]();
-        setTimeout(function () {
-            dfd.resolve();
-        }, time);
-        return dfd.promise();
-    };
-}
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GameData__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
-/* unused harmony export startLifeProgressChecker */
-/* unused harmony export stopLifeChecker */
-/* harmony export (immutable) */ __webpack_exports__["a"] = startDataUpdateChecker;
-/* unused harmony export stopDataUpdateChecker */
-
-
-
-var lifeCheckerStoped = false;
-var lifeProgressBar = __WEBPACK_IMPORTED_MODULE_2_jquery__('.progress-bar');
-function startLifeProgressChecker(onDie) {
-    function checkLife() {
-        if (lifeCheckerStoped) {
-            return;
-        }
-        var now = __WEBPACK_IMPORTED_MODULE_1__utils__["d" /* now */]();
-        var lifeRemain = Math.max(0, __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - now);
-        var lifeTotal = __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].deathTime - __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].brithTime;
-        lifeProgressBar.css('transform', "translateY(" + -(1 - lifeRemain / lifeTotal) * 100 + "%)");
-        if (lifeRemain === 0) {
-            onDie();
-        }
-        else {
-            setTimeout(checkLife, 500);
-        }
-    }
-    checkLife();
-}
-function stopLifeChecker() {
-    lifeCheckerStoped = true;
-}
-var dataUpdateCheckerStoped = false;
-function startDataUpdateChecker(onData) {
-    function checkDataUpdate() {
-        if (dataUpdateCheckerStoped) {
-            return;
-        }
-        __WEBPACK_IMPORTED_MODULE_2_jquery__["get"]('get_status.php')
-            .then(function (status) {
-            onData(status);
-        })
-            .always(function () {
-            setTimeout(checkDataUpdate, 5000);
-        });
-    }
-    checkDataUpdate();
-}
-function stopDataUpdateChecker() {
-    dataUpdateCheckerStoped = true;
-}
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-    userId: Data.userId,
-    brithTime: Data.brithTime,
-    deathTime: Data.deathTime,
-    gameStarted: false
-});
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = crtScreen;
-function crtScreen(screen) {
-    function flicker() {
-        if (Math.random() > 0.9) {
-            screen.addClass('flicker');
-            setTimeout(function () {
-                screen.removeClass('flicker');
-                if (Math.random() > 0.6) {
-                    setTimeout(function () { screen.addClass('flicker'); }, 50);
-                    setTimeout(function () { screen.removeClass('flicker'); }, 100);
-                }
-            }, 50);
-        }
-        setTimeout(flicker, 200);
-    }
-    flicker();
-}
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony export (immutable) */ __webpack_exports__["a"] = typer;
-
-function typer(el, text) {
-    var dfd = __WEBPACK_IMPORTED_MODULE_0_jquery__["Deferred"]();
-    var existHandle = el.data('typing-handle');
-    if (existHandle) {
-        clearTimeout(existHandle);
-    }
-    var currIndex = -1;
-    var currText = '';
-    var textLen = text.length;
-    function typeNext() {
-        el.data('typing-handle', null);
-        currIndex += 1;
-        var currChar = text[currIndex];
-        currText += currChar;
-        el.text(currText);
-        if (currIndex < textLen - 1) {
-            var delayTime = 50;
-            switch (currChar) {
-                case ' ':
-                    delayTime = 60;
-                    break;
-                case '\n':
-                    delayTime = 500;
-                    break;
-                case ',':
-                    delayTime = 400;
-                    break;
-                case '.':
-                    delayTime = 500;
-                    break;
-            }
-            var handle = setTimeout(typeNext, Math.random() * 100 + delayTime);
-            el.data('typing-handle', handle);
-        }
-        else {
-            dfd.resolve();
-        }
-    }
-    typeNext();
-    return dfd.promise();
 }
 
 
