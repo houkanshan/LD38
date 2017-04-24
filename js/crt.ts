@@ -2,14 +2,14 @@ import GameData from './GameData'
 
 export default function crtScreen(screen: JQuery): void {
     function flicker() {
-        screen.css('opacity', GameData.life / 2 + 0.5)
+        const baseOpacity = GameData.life / 2 + 0.45
         if (Math.random() > GameData.life) {
-            screen.addClass('flicker')
+            screen.css('opacity', Math.random() * baseOpacity * 0.5 + 0.5)
             setTimeout(function() {
-                screen.removeClass('flicker')
+                screen.css('opacity', baseOpacity)
                 if (Math.random() > 0.6) {
-                    setTimeout(() => { screen.addClass('flicker') }, 50)
-                    setTimeout(() => { screen.removeClass('flicker') }, 100)
+                    setTimeout(() => { screen.css('opacity', Math.random() * baseOpacity) }, 50)
+                    setTimeout(() => { screen.css('opacity', baseOpacity) }, 100)
                 }
             }, 50)
         }

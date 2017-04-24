@@ -450,9 +450,6 @@ template {
   z-index: 1;
   pointer-events: none;
 }
-.crt-container.flicker::after {
-  opacity: 0.7;
-}
 .crt-container::before {
   content: " ";
   display: block;

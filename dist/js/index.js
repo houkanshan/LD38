@@ -10451,15 +10451,14 @@ function stopDataUpdateChecker() {
 
 function crtScreen(screen) {
     function flicker() {
-        console.log(__WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].life);
-        screen.css('opacity', __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].life / 2 + 0.5);
+        var baseOpacity = __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].life / 2 + 0.45;
         if (Math.random() > __WEBPACK_IMPORTED_MODULE_0__GameData__["a" /* default */].life) {
-            screen.addClass('flicker');
+            screen.css('opacity', Math.random() * baseOpacity * 0.5 + 0.5);
             setTimeout(function () {
-                screen.removeClass('flicker');
+                screen.css('opacity', baseOpacity);
                 if (Math.random() > 0.6) {
-                    setTimeout(function () { screen.addClass('flicker'); }, 50);
-                    setTimeout(function () { screen.removeClass('flicker'); }, 100);
+                    setTimeout(function () { screen.css('opacity', Math.random() * baseOpacity); }, 50);
+                    setTimeout(function () { screen.css('opacity', baseOpacity); }, 100);
                 }
             }, 50);
         }
