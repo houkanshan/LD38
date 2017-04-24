@@ -55,6 +55,7 @@ function startGame() {
 }
 
 function startPlay() : void {
+  if (gotDead) { return }
   $.post('extend_life.php')
   .then((newLife) => {
     if (newLife) {

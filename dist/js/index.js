@@ -10382,6 +10382,9 @@ function startGame() {
     }, 1000);
 }
 function startPlay() {
+    if (gotDead) {
+        return;
+    }
     __WEBPACK_IMPORTED_MODULE_0_jquery__["post"]('extend_life.php')
         .then(function (newLife) {
         if (newLife) {
