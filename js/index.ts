@@ -156,7 +156,7 @@ function startShowComment() {
 
 function startDeath() : void {
   const lifeTime = GameData.deathTime - GameData.brithTime
-  const {minutes, hours, seconds} = utils.parseTime(lifeTime)
+  const {days, minutes, hours, seconds} = utils.parseTime(lifeTime)
 
   utils.delayedPromise(1000)()
   .then(() => {
@@ -165,7 +165,7 @@ function startDeath() : void {
   })
   .then(utils.delayedPromise(500))
   .then(() => {
-    return typer($('#end-word'), `The Game is now dead,\nit has lived for ${hours} hours,\n${minutes} minutes, ${seconds} seconds.`)
+    return typer($('#end-word'), `The Game is now dead,\nit has lived for ${days} days, ${hours} hours,\n${minutes} minutes, ${seconds} seconds.`)
   })
   // .then(utils.delayedPromise(500))
   // .then(() => updateComment(holdingComment))

@@ -4,11 +4,17 @@ export function now() {
   return Date.now() / 1000 | 0
 }
 
+const daySec = 3600 * 24
 export function parseTime(sec) {
-  const hours = Math.floor(sec / 3600)
-  const minutes = Math.floor((sec - (hours * 3600)) / 60)
-  const seconds = Math.floor(sec - (hours * 3600) - (minutes * 60))
-  return { hours, minutes, seconds }
+  let restSec = sec
+  const days = Math.floor(restSec / daySec)
+  restSec -= daySec * days
+  const hours = Math.floor(restSec / 3600)
+  restSec -= hours * 3600
+  const minutes = Math.floor(restSec / 60)
+  restSec -= minutes * 60
+  const seconds = Math.floor(restSec)
+  return { days, hours, minutes, seconds }
 }
 
 export function leftPad(i: any): string {
