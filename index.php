@@ -15,8 +15,9 @@ $can_extend = can_extend_life($ip);
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>LD38</title>
+  <title>This Game Will Die Eventually, and So Will You.</title>
   <link rel="stylesheet" href="dist/css/index.css?v=<?php echo VERSION ?>">
+  <link rel="shortcut icon" href="http://serotoninphobia.info/favicon.ico"/>
   <meta name="viewport" content="user-scalable=no, width=540">
 </head>
 <body data-state="<?php echo $is_dead ? 'dead' : 'title'?>">
