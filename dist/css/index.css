@@ -635,7 +635,7 @@ body.hide-loading-layer:before {
   font-size: 12px;
   line-height: 1;
   left: 8px;
-  bottom: 7px;
+  bottom: 6px;
 }
 .stage {
   z-index: 1;
