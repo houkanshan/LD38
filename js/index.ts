@@ -74,15 +74,14 @@ function startPlay() : void {
 
   utils.delayedPromise(300)()
   .then(() => {
-    debugger
-    console.log(GameData)
+    // console.log(GameData)
     if (GameData.canExtend) {
       $.post('extend_life.php')
       updateLifeProgress(GameData.life + 1 / 100)
-      console.info('Life extended.')
+      // console.info('Life extended.')
       GameData.canExtend = false
     } else {
-      console.info('Can`t extend life.')
+      // console.info('Can`t extend life.')
     }
   })
   .then(utils.delayedPromise(800))
