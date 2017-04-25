@@ -1,7 +1,7 @@
 <?php include "base.php"; ?>
 
 <?php
-define("VERSION", 21);
+define("VERSION", 22);
 $ip = $_SERVER['REMOTE_ADDR'];
 $is_dead = is_dead();
 $user_id = get_id_by_ip($ip);
@@ -46,7 +46,7 @@ $can_extend = can_extend_life($ip);
 
   <?php } ?>
   <div id="stage-dead" class="stage">
-    <div id="end-title"></div>
+    <div id="end-title"><?php echo $is_dead ? 'GAME OVER' : '' ?></div>
     <div id="end-word"></div>
   </div>
 
