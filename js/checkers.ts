@@ -34,7 +34,7 @@ export function startDataUpdateChecker(onData: (any) => any) {
           deathTime: status.b,
           is_dead: status.c,
           life: status.d,
-          can_extend: status.e,
+          canExtend: status.e,
         })
       })
       .always(() => {
