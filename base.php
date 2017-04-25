@@ -105,6 +105,7 @@ function can_extend_life($ip) {
 
   $user_info = get_or_create_user_info($ip);
   $last_active_time = $user_info[1];
+  $curr_time = time();
 
   if ($last_active_time) {
     if ($curr_time - $last_active_time < USER_COOLING_TIME) {
