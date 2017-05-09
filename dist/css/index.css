@@ -482,7 +482,7 @@ body {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  background: url("../pics/background.png") top left/200px 200px;
+  background: #00fff7;
 }
 body:before {
   content: '';
@@ -710,6 +710,16 @@ body.hide-loading-layer:before {
 @media screen and (min-height: 900px) {
   #computer {
     bottom: 0;
+  }
+}
+@media screen and (max-height: 740px) {
+  html,
+  body {
+    overflow: auto;
+  }
+  #computer {
+    margin-top: 20px;
+    bottom: auto;
   }
 }
 .preload {

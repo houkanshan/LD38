@@ -19,7 +19,8 @@ html, body
 
 body
   user-select: none
-  background: url(../pics/background.png) top left \/ 200px 200px
+  // background: url(../pics/background.png?v=1) top left \/ 200px 200px
+  background: #00fff7
   &:before
     content: ''
     text-align: center
@@ -221,6 +222,14 @@ body
 @media screen and (min-height: 900px)
   #computer
     bottom: 0
+
+@media screen and (max-height: 740px)
+  html, body
+    overflow: auto
+  #computer
+    margin-top: 20px
+    bottom: auto
+
 
 .preload
   position: absolute
