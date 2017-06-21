@@ -33,6 +33,6 @@ include "base.php";
     <button type="submit">submit</button>
   </form>
 
-  <?php phpinfo() ?>
+  <?php /*phpinfo()*/ ?>
 </body>
 </html>

@@ -77,7 +77,7 @@ function startPlay() : void {
     // console.log(GameData)
     if (GameData.canExtend) {
       $.post('extend_life.php')
-      updateLifeProgress(GameData.life + 1 / 100)
+      updateLifeProgress(GameData.life + 1 / 80)
       // console.info('Life extended.')
       GameData.canExtend = false
     } else {
