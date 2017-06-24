@@ -41,7 +41,7 @@ let progressUpdating = false
 function updateLifeProgress(life) {
   if (progressUpdating) { return }
   progressUpdating = true
-  lifeProgressBar.css('transform', `translateY(${(1 - Math.min(1, life)) * 100}%)`)
+  lifeProgressBar.css('transform', `translateY(${(1 - Math.min(1, life*0.8)) * 100}%)`)
   setTimeout(function() { progressUpdating = false }, 300)
 }
 // Checkers.startLifeProgressChecker(startDeath)
@@ -77,7 +77,7 @@ function startPlay() : void {
     // console.log(GameData)
     if (GameData.canExtend) {
       $.post('extend_life.php')
-      updateLifeProgress(GameData.life + 1 / 80)
+      updateLifeProgress(GameData.life + 0.01)
       // console.info('Life extended.')
       GameData.canExtend = false
     } else {

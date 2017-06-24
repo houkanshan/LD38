@@ -1,12 +1,12 @@
 <?php include "base.php"; ?>
 
 <?php
-define("VERSION", 25);
+define("VERSION", 26);
 $ip = $_SERVER['REMOTE_ADDR'];
 $is_dead = is_dead();
 $user_id = get_id_by_ip($ip);
 $brith_time = get_brith_time();
-$life = get_life();
+$life = get_show_life();
 $death_time = get_death_time();
 $can_extend = can_extend_life($ip);
 ?>

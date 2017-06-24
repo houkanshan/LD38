@@ -12,7 +12,7 @@ define("USER_COOLING_TIME", 60*60*1.5); // 1.5 hour.
 define("INITIAL_LIFE_TIME", 24 * 16); // 16 days
 define("HALF_LIFE_TIME", 12); // half a day
 define("DEAD_LIFE", 1 / pow(2, INITIAL_LIFE_TIME/HALF_LIFE_TIME));
-define("LIFE_EXTEND_EACH_TIME", 1 / INITIAL_LIFE_TIME / 8);
+define("LIFE_EXTEND_EACH_TIME", 1 / INITIAL_LIFE_TIME / 16);
 
 date_default_timezone_set('UTC');
 
@@ -176,6 +176,10 @@ function get_life() {
     // echo $new_life;
     return update_life($new_life, $curr_time);
   }
+}
+
+function get_show_life() {
+  return log(get_life() / DEAD_LIFE, 2) * HALF_LIFE_TIME / INITIAL_LIFE_TIME;
 }
 
 function get_last_life_info() {

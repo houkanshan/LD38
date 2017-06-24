@@ -12,6 +12,7 @@ include "base.php";
   <p> Born in: <?php echo date(DATE_RFC2822, get_brith_time()) ?></p>
   <p> Will die at: <?php echo date(DATE_RFC2822, get_death_time()); ?> </p>
   <p> Life: <?php echo get_life() ?></p>
+  <p> Display percentage: <?php echo get_show_life() ?></p>
   <p> Dead Life: <?php echo DEAD_LIFE ?></p>
 
   <p><?php

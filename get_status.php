@@ -16,7 +16,7 @@ try {
         "a" => get_last_comment(),
         "b" => get_death_time(),
         "c" => is_dead(),
-        "d" => get_life(),
+        "d" => get_show_life(),
         "e" => can_extend_life($ip),
     );
 } catch (Exception $e) {
